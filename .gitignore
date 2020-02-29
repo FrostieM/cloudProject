@@ -1,0 +1,6 @@
+packages
+.vs
+Backend/ClassLib/bin
+Backend/ClassLib/obj
+Backend/Client/bin/*/*[.exe,.pdb]
+Backend/Client/obj
