@@ -19,8 +19,20 @@
     <ItemGroup>
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
+        <Content Include="ClientApp\src\assets\computer.svg" />
+        <Content Include="ClientApp\src\assets\monitor.svg" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <None Include="ClientApp\src\app\app.component.css" />
+        <None Include="ClientApp\src\app\home\home.component.css" />
+        <None Include="ClientApp\src\app\shared\interfaces\computer.interface.ts" />
+        <None Include="ClientApp\src\app\shared\services\computer.service.ts" />
+        <None Include="ClientApp\src\app\sidebar\nav-menu.component.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

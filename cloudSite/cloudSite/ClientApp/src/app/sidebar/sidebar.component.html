@@ -1,0 +1,9 @@
+<div class="m-0 p-0 bg-success min-vh-100">
+  <button *ngFor="let computer of computers"
+          class="btn text-light text-left rounded-0 m-0 p-3 col-12 bd-computer"
+          [ngClass]="computer.name == currentComputer?.name ? 'selected' : null"
+          (click)="selectComputer(computer)">
+    <img class="col-4" src="assets/computer.svg" alt="laptop image">
+    <span>{{computer.name}} <span class="badge badge-light">{{computer.programs}}</span></span>
+  </button>
+</div>
