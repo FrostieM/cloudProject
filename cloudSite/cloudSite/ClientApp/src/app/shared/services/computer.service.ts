@@ -14,7 +14,8 @@ export class ComputerService{
   }
 
   public getComputerInfo(computerName: string): Observable<string[]>{
-    return this.getRequest<string[]>(this.baseUrl + "api/computer/computerInfo");
+    let params = new HttpParams().set("computerName", computerName);
+    return this.getRequest<string[]>(this.baseUrl + "api/computer/computerInfo", params);
   }
 
   private getRequest<T>(url: string, params?: HttpParams, responseType?): Observable<T>{

@@ -204,13 +204,11 @@
         <e p="cloudSite.csproj" t="IncludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ComputerController.cs" t="Include" />
-          <e p="WeatherForecastController.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
               <e p="cloudSite.AssemblyInfo.cs" t="Include" />
-              <e p="cloudSite.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -222,7 +220,6 @@
         <e p="ViewData" t="Include">
           <e p="ComputerViewData.cs" t="Include" />
         </e>
-        <e p="WeatherForecast.cs" t="Include" />
         <e p="wwwroot" t="Include">
           <e p="favicon.ico" t="Include" />
         </e>

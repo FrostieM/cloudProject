@@ -28,6 +28,10 @@
         <None Include="ClientApp\src\app\shared\interfaces\computer.interface.ts" />
         <None Include="ClientApp\src\app\shared\services\computer.service.ts" />
         <None Include="ClientApp\src\app\sidebar\nav-menu.component.ts" />
+        
+        <None Remove="$(SpaRoot)**" /> <!-- This has been added -->
+        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    
     </ItemGroup>
 
     <ItemGroup>
@@ -61,6 +65,7 @@
                 <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
             </ResolvedFileToPublish>
         </ItemGroup>
+        
     </Target>
 
 </Project>
