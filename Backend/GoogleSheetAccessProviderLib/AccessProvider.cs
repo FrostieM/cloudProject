@@ -1,16 +1,12 @@
-using System;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
-using Google.Apis.Drive.v3;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using Google.Apis.Download;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using System.Linq;
-using System.Dynamic;
 
 
 namespace GoogleSheetAccessProviderLib
