@@ -1,7 +1,3 @@
 packages
 .vs
 .idea
-Backend/ClassLib/bin
-Backend/ClassLib/obj
-Backend/GoogleSheetAccessProviderLib/bin/*/*[.exe,.pdb,.dll]
-Backend/GoogleSheetAccessProviderLib/obj
