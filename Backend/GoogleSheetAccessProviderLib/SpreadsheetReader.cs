@@ -9,7 +9,7 @@ namespace GoogleSheetAccessProviderLib
     public class ComputerInfo
     {
         public string Name { get; set; }
-        public int AppsNum  => Apps.Count; 
+        public int AppsNum { get => Apps.Count; }
         public DateTime Date { get; set; }
         public List<string> Apps { get; set; }
     }
@@ -21,7 +21,8 @@ namespace GoogleSheetAccessProviderLib
         public ComputerInfo GetComputer(string computerName)
         {
             var sheetData = GetSheetData(computerName);
-            var date = new DateTime(1970, 1, 1).AddMilliseconds(double.Parse(GetDate(sheetData)));
+            var seconds = double.Parse(GetDate(sheetData));
+            var date = new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
             var apps = GetApplications(sheetData).ToList();
 
             var comp = new ComputerInfo
@@ -57,7 +58,7 @@ namespace GoogleSheetAccessProviderLib
             if (sheetData.ToList().Count == 0)
                 return null;
 
-            sheetData.Skip(2);
+            sheetData = sheetData.Skip(2);
             var result = new List<string>();
 
             foreach (var row in sheetData)
