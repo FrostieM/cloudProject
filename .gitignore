@@ -1,0 +1,9 @@
+packages
+.vs
+Backend/ClassLib/bin
+Backend/ClassLib/obj
+Backend/Server/bin/*/*[.exe,.pdb]
+Backend/Server/obj
+Backend/GoogleSheetAccessProviderLib/obj
+Backend/GoogleSheetAccessProviderLib/bin/*/*[.exe,.pdb,.dll]
+Backend/GoogleSheetAccessProviderLib/bin/Debug/client_secret.json
