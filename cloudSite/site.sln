@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cloudSite", "cloudSite\cloudSite.csproj", "{FBBB5869-F4C9-410B-AB74-D800498B7CF4}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cloudSite", "cloudSite\cloudSite.csproj", "{FBBB5869-F4C9-410B-AB74-D800498B7CF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSheetAccessProviderLib", "..\Backend\GoogleSheetAccessProviderLib\GoogleSheetAccessProviderLib.csproj", "{E2B0CDFA-55C5-40BC-BC00-47618E240519}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2B0CDFA-55C5-40BC-BC00-47618E240519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2B0CDFA-55C5-40BC-BC00-47618E240519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2B0CDFA-55C5-40BC-BC00-47618E240519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2B0CDFA-55C5-40BC-BC00-47618E240519}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66771EFB-678B-4D78-BFD8-1EAFE0E93DB5}
 	EndGlobalSection
 EndGlobal

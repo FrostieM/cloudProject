@@ -4,9 +4,6 @@ D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\client_secre
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.dll.config
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.pdb
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Core.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.PlatformServices.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.pdb
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.xml
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Auth.pdb
