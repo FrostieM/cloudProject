@@ -1,0 +1,5 @@
+{
+       "clearDB": "false",
+       "tray":"false",
+       "port":"8000"
+}
