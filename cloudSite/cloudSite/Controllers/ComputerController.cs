@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using cloudSite.ViewData;
+using GoogleSheetAccessProviderLib;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cloudSite.Controllers
@@ -8,27 +10,36 @@ namespace cloudSite.Controllers
     [Route("api/[controller]")]
     public class ComputerController : ControllerBase
     {
-    
+
+        private readonly SpreadsheetReader _reader = new SpreadsheetReader();
+        private readonly int _pageSize = 10;
+        
         [HttpGet]
         public IEnumerable GetComputers()
         {
-            return new[]
-            {
-                new ComputerViewData{ Name = "123.214.152.215", Programs = 5},
-                new ComputerViewData{ Name = "325.23.235.234", Programs = 2},
-                new ComputerViewData{ Name = "235.235.234.532", Programs = 3},
-                new ComputerViewData{ Name = "234.425.65.434", Programs = 10},
-                new ComputerViewData{ Name = "132.12.422.24", Programs = 12},
-                new ComputerViewData{ Name = "143.53.24.42", Programs = 42},
-            };
+            return _reader.GetComputers();
         }
-        
+
         [Route("computerInfo")]
         [HttpGet]
-        public IEnumerable GetComputerInfo(string computerName)
+        public ComputerViewData GetComputerInfo(string computerName, int page = 1)
         {
-            Console.WriteLine(computerName);
-            return new[] { "cs go", "dota", "fortnite", "dauntless", "vs code", "firefox" };
+            var computerInfo = _reader.GetComputer(computerName);
+            return new ComputerViewData
+            {
+                ComputerInfo = new ComputerInfo
+                {
+                    Date = computerInfo.Date,
+                    Name = computerInfo.Name,
+                    Apps = computerInfo.Apps.Skip(_pageSize * (page - 1)).Take(_pageSize).ToList()
+                },
+                Pagination = new PaginationViewData
+                {
+                    TotalItems = computerInfo.Apps.Count,
+                    CurrentPage = page,
+                    PageSize = _pageSize
+                }
+            };
         }
     }
 }

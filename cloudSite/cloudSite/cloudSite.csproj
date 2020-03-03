@@ -26,6 +26,9 @@
         <None Include="ClientApp\src\app\app.component.css" />
         <None Include="ClientApp\src\app\home\home.component.css" />
         <None Include="ClientApp\src\app\shared\interfaces\computer.interface.ts" />
+        <None Include="ClientApp\src\app\shared\interfaces\computerInfo.interface.ts" />
+        <None Include="ClientApp\src\app\shared\interfaces\computerViewData.interface.ts" />
+        <None Include="ClientApp\src\app\shared\interfaces\pagination.interface.ts" />
         <None Include="ClientApp\src\app\shared\services\computer.service.ts" />
         <None Include="ClientApp\src\app\sidebar\nav-menu.component.ts" />
         
@@ -37,6 +40,11 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\GoogleSheetAccessProviderLib\GoogleSheetAccessProviderLib.csproj" />
+      <ProjectReference Include="..\googleTable\googleTable.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

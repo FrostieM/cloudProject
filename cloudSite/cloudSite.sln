@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cloudSite", "cloudSite\cloudSite.csproj", "{FBBB5869-F4C9-410B-AB74-D800498B7CF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "googleTable", "googleTable\googleTable.csproj", "{811E7653-E453-44BD-87E7-CB8164CDB377}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBBB5869-F4C9-410B-AB74-D800498B7CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{811E7653-E453-44BD-87E7-CB8164CDB377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811E7653-E453-44BD-87E7-CB8164CDB377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811E7653-E453-44BD-87E7-CB8164CDB377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811E7653-E453-44BD-87E7-CB8164CDB377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

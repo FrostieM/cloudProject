@@ -2,6 +2,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {IComputer} from "../interfaces/computer.interface";
+import {IComputerViewData} from "../interfaces/computerViewData.interface";
 
 @Injectable()
 export class ComputerService{
@@ -13,9 +14,9 @@ export class ComputerService{
     return this.getRequest<IComputer[]>(this.baseUrl + "api/computer");
   }
 
-  public getComputerInfo(computerName: string): Observable<string[]>{
-    let params = new HttpParams().set("computerName", computerName);
-    return this.getRequest<string[]>(this.baseUrl + "api/computer/computerInfo", params);
+  public getComputerInfo(computerName: string, page: number): Observable<IComputerViewData>{
+    let params = new HttpParams().set("computerName", computerName).set("page", page.toString());
+    return this.getRequest<IComputerViewData>(this.baseUrl + "api/computer/computerInfo", params);
   }
 
   private getRequest<T>(url: string, params?: HttpParams, responseType?): Observable<T>{
