@@ -51,8 +51,8 @@ namespace ClassLib
         }
         public static void TcpSend(byte[] data, string ip, int port)
         {
-            using (TcpClient client = GetConnectionClient(ip, port))
-                using (NetworkStream stream = client.GetStream())
+            using (var client = GetConnectionClient(ip, port))
+                using (var stream = client.GetStream())
                     stream.Write(data, 0, data.Length);
         }
         public static string GetLocalIPAddress()

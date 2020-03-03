@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ClassLib
 {
@@ -27,10 +24,7 @@ namespace ClassLib
             this.version = version;
         }
 
-        public override string ToString()
-        {
-            return $"{name} {version}";
-        }
+        public override string ToString() => $"{name} {version}";
     }
 
     public class AppsContainer
@@ -43,12 +37,6 @@ namespace ClassLib
         {
             date = DateTimeOffset.Now.ToUnixTimeSeconds();
             apps = new List<App>();
-        }
-
-        public static AppsContainer LoadFromBytes(byte[] data)
-        {
-            var message = Encoding.Unicode.GetString(data);
-            return JsonConvert.DeserializeObject<AppsContainer>(message);
         }
 
         public byte[] GetBytes()
