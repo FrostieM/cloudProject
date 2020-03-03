@@ -1,8 +1,0 @@
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\bin\Debug\netcoreapp3.1\googleTable.deps.json
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\bin\Debug\netcoreapp3.1\googleTable.dll
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\bin\Debug\netcoreapp3.1\googleTable.pdb
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\obj\Debug\netcoreapp3.1\googleTable.csprojAssemblyReference.cache
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\obj\Debug\netcoreapp3.1\googleTable.AssemblyInfoInputs.cache
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\obj\Debug\netcoreapp3.1\googleTable.AssemblyInfo.cs
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\obj\Debug\netcoreapp3.1\googleTable.dll
-C:\Users\Osino\Desktop\work\cloudProject\cloudSite\googleTable\obj\Debug\netcoreapp3.1\googleTable.pdb

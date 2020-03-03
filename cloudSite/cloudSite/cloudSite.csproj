@@ -13,7 +13,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Apis" Version="1.44.0" />
+        <PackageReference Include="Google.Apis.Auth" Version="1.44.0" />
+        <PackageReference Include="Google.Apis.Core" Version="1.44.0" />
+        <PackageReference Include="Google.Apis.Drive.v3" Version="1.44.0.1874" />
+        <PackageReference Include="Google.Apis.Sheets.v4" Version="1.44.0.1877" />
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -41,12 +47,7 @@
       <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\GoogleSheetAccessProviderLib\GoogleSheetAccessProviderLib.csproj" />
-      <ProjectReference Include="..\googleTable\googleTable.csproj" />
-    </ItemGroup>
-
+    
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->
         <Exec Command="node --version" ContinueOnError="true">
