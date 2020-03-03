@@ -207,6 +207,11 @@
             Key for a stream response interceptor provider in an <see cref="T:System.Net.Http.HttpRequestMessage"/> properties.
             </summary>
         </member>
+        <member name="F:Google.Apis.Http.ConfigurableMessageHandler.CredentialKey">
+            <summary>
+            Key for a credential in a <see cref="T:System.Net.Http.HttpRequestMessage"/> properties.
+            </summary>
+        </member>
         <member name="F:Google.Apis.Http.ConfigurableMessageHandler.ApiVersion">
             <summary>The current API version of this client library.</summary>
         </member>
@@ -369,6 +374,14 @@
         </member>
         <member name="P:Google.Apis.Http.ConfigurableMessageHandler.GoogleApiClientHeader">
             <summary>Gets or sets the value set for the x-goog-api-client header.</summary>
+        </member>
+        <member name="P:Google.Apis.Http.ConfigurableMessageHandler.Credential">
+            <summary>
+            The credential to apply to all requests made with this client,
+            unless theres a specific call credential set.
+            If <see cref="P:Google.Apis.Http.ConfigurableMessageHandler.Credential"/> implements <see cref="T:Google.Apis.Http.IHttpUnsuccessfulResponseHandler"/>
+            then it will also be included as a handler of an unsuccessful response.
+            </summary>
         </member>
         <member name="M:Google.Apis.Http.ConfigurableMessageHandler.#ctor(System.Net.Http.HttpMessageHandler)">
             <summary>Constructs a new configurable message handler.</summary>
@@ -817,6 +830,16 @@
         </member>
         <member name="M:Google.Apis.Json.NewtonsoftJsonSerializer.Deserialize``1(System.IO.Stream)">
             <inheritdoc/>
+        </member>
+        <member name="M:Google.Apis.Json.NewtonsoftJsonSerializer.DeserializeAsync``1(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Deserializes the given stream but reads from it asynchronously, observing the given cancellation token.
+            Note that this means the complete JSON is read before it is deserialized into objects.
+            </summary>
+            <typeparam name="T">The type to convert to.</typeparam>
+            <param name="input">The stream to read from.</param>
+            <param name="cancellationToken">Cancellation token for the operation.</param>
+            <returns>The deserialized object.</returns>
         </member>
         <member name="T:Google.Apis.Logging.BaseLogger">
             <summary>
@@ -1511,6 +1534,12 @@
         </member>
         <member name="M:Google.Apis.Util.StringValueAttribute.#ctor(System.String)">
             <summary>Creates a new string value attribute with the specified text.</summary>
+        </member>
+        <member name="M:Google.Apis.Util.TaskExtensions.WithCancellationToken``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken)">
+            <summary>
+            Returns a task which can be cancelled by the given cancellation token, but otherwise observes the original
+            task's state. This does *not* cancel any work that the original task was doing, and should be used carefully.
+            </summary>
         </member>
         <member name="T:Google.Apis.Util.UriPatcher">
              <summary>

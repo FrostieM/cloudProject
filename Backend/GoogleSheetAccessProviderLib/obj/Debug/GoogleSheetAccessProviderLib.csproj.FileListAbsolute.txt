@@ -4,14 +4,9 @@ D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\client_secre
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.dll.config
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\GoogleSheetAccessProviderLib.pdb
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Auth.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Auth.PlatformServices.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Core.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Drive.v3.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.PlatformServices.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Sheets.v4.dll
-D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Newtonsoft.Json.dll
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.pdb
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.xml
 D:\Projects\C#\Cloud\Backend\GoogleSheetAccessProviderLib\bin\Debug\Google.Apis.Auth.pdb

@@ -231,7 +231,7 @@
         <member name="F:Google.Apis.ETagAction.IfNoneMatch">
             <summary>
             The ETag will be added as an "If-None-Match" header.
-            A request sent with an "If-Match" header will only succeed if both ETags are not identical.
+            A request sent with an "If-None-Match" header will only succeed if ETags are not identical.
             </summary>
         </member>
         <member name="T:Google.Apis.Media.MediaApiErrorHandling">
@@ -354,6 +354,13 @@
         </member>
         <member name="F:Google.Apis.Requests.ClientServiceRequest._executeInterceptors">
             <summary>Unsuccessful response handlers for this request only.</summary>
+        </member>
+        <member name="P:Google.Apis.Requests.ClientServiceRequest.Credential">
+            <summary>
+            Credential to use for this request.
+            If <see cref="P:Google.Apis.Requests.ClientServiceRequest.Credential"/> implements <see cref="T:Google.Apis.Http.IHttpUnsuccessfulResponseHandler"/>
+            then it will also be included as a handler of an unsuccessful response.
+            </summary>
         </member>
         <member name="M:Google.Apis.Requests.ClientServiceRequest.AddUnsuccessfulResponseHandler(Google.Apis.Http.IHttpUnsuccessfulResponseHandler)">
             <summary>
