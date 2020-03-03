@@ -1,8 +1,10 @@
-﻿namespace cloudSite.ViewData
+﻿using GoogleSheetAccessProviderLib;
+
+namespace cloudSite.ViewData
 {
     public class ComputerViewData
     {
-        public string Name { get; set; }
-        public int Programs { get; set; }
+       public ComputerInfo ComputerInfo { get; set; }
+       public PaginationViewData Pagination { get; set; }
     }
 }

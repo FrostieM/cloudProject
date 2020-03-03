@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {IComputer} from "../shared/interfaces/computer.interface";
 import {ComputerService} from "../shared/services/computer.service";
+import {IComputerInfo} from "../shared/interfaces/computerInfo.interface";
+import {IComputerViewData} from "../shared/interfaces/computerViewData.interface";
 
 @Component({
   selector: 'app-home',
@@ -9,15 +10,13 @@ import {ComputerService} from "../shared/services/computer.service";
 })
 export class HomeComponent {
 
-  public programs: string[] = [];
+  public computerViewData: IComputerViewData;
 
   private _computer: string;
   public set Computer(computer: string){
-    console.log(computer);
     this._computer = computer;
-    this.computerService.getComputerInfo(this.Computer).subscribe(
-      request => this.programs = request
-    )
+    this.computerViewData = null;
+    this.getComputerInfo(this._computer, 1);
   }
 
   public get Computer(){
@@ -27,5 +26,23 @@ export class HomeComponent {
   constructor(private computerService: ComputerService) {
   }
 
+  public getComputerInfo(computerName: string, page: number){
+    this.computerService.getComputerInfo(this.Computer, page).subscribe(
+      request => this.computerViewData = request
+    );
+  }
+
+  public getPages(){
+    if(!this.computerViewData)
+      return null;
+
+    let pages = [];
+
+    for (let i = 1; i <= this.computerViewData.pagination.pages; i ++){
+      pages.push(i);
+    }
+
+    return pages;
+  }
 
 }

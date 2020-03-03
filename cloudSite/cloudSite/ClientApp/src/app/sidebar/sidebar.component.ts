@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IComputer} from "../shared/interfaces/computer.interface";
 import {ComputerService} from "../shared/services/computer.service";
 

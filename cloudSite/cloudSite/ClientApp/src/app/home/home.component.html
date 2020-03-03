@@ -1,23 +1,52 @@
 <div class="row">
-  <div class="col-2 m-0 p-0">
+
+  <div class="col-3 m-0 p-0">
     <app-sidebar (messageToShowComputerInfo)="Computer = $event"></app-sidebar>
   </div>
 
-  <div *ngIf="Computer" class="col-10 m-0 p-0">
+  <div *ngIf="Computer" class="col-9 m-0 p-0">
+
     <div class="card p-0 col-10 offset-1 text-center">
       <div class="card-header bg-blue text-white">
-        Computer: {{Computer}}
+        Computer: {{Computer}}, Last Update: {{computerViewData?.computerInfo.date}}
       </div>
 
       <ul class="list-group list-group-flush">
-        <li *ngFor="let program of programs" class="list-group-item">{{program}}</li>
+        <li *ngFor="let app of computerViewData?.computerInfo.apps" class="list-group-item">{{app}}</li>
       </ul>
 
       <div class="card-footer bg-blue text-white">
-        5 days ago updated
-      </div>
 
+        <nav *ngIf="computerViewData" aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" >
+              <button class="btn text-white"
+                      [disabled]="computerViewData?.pagination.currentPage == 1"
+                      (click)="getComputerInfo(_computer, computerViewData.pagination.currentPage - 1)">
+                Previous
+              </button>
+            </li>
+
+            <li *ngFor="let page of getPages()" class="page-item">
+              <button class="btn text-white"
+                      [disabled]="computerViewData?.pagination.currentPage == page"
+                      (click)="getComputerInfo(_computer, page)">
+                {{page}}
+              </button>
+            </li>
+
+            <li class="page-item">
+              <button class="btn text-white"
+                      [disabled]="computerViewData?.pagination.currentPage == computerViewData?.pagination.pages"
+                      (click)="getComputerInfo(_computer, computerViewData.pagination.pages)">
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
+
   </div>
 
 </div>
