@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSheetLib", "GoogleSheetLib\GoogleSheetLib.csproj", "{E9C8FC0F-7DCC-416E-BC51-70BB1E3BF9FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9C8FC0F-7DCC-416E-BC51-70BB1E3BF9FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C8FC0F-7DCC-416E-BC51-70BB1E3BF9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C8FC0F-7DCC-416E-BC51-70BB1E3BF9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C8FC0F-7DCC-416E-BC51-70BB1E3BF9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B01DE42-8079-4267-A3FC-CCAD019DD574}
+	EndGlobalSection
+EndGlobal
