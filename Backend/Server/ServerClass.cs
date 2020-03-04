@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 using ClassLib;
 using GoogleSheetAccessProviderLib;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System.IO;
@@ -17,6 +15,8 @@ namespace Server
 {
     class ServerClass
     {
+        private static readonly object Locker = new object();
+
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
@@ -29,56 +29,34 @@ namespace Server
         static void Main(string[] args)
         {
             
-            ServerClass.config = JObject.Parse(File.ReadAllText("config.json"));
+            config = JObject.Parse(File.ReadAllText("config.json"));
             var tray = config["tray"].ToObject<bool>();
-            if (tray == true)
+            if (tray)
             {
                 ShowWindow(GetConsoleWindow(), 0);
-                var icon = new NotifyIcon();
-                icon.Icon = new Icon("icon.ico");
-                icon.Visible = true;
+                var icon = new NotifyIcon {Icon = new Icon("icon.ico"), Visible = true};
             }
             else
             {
                 ShowWindow(GetConsoleWindow(), 1); 
             }
             var startDB = config["clearDB"].ToObject<bool>();
-            if (startDB == true)
-            {
-                dbWork.ClearDB();
-            }
+            if (startDB) dbWork.ClearDB();
             var port = config["port"].ToObject<int>();
 
             var callback = new Action<TcpClient>(client =>
              {
-                 Console.WriteLine("New connection "+ ((IPEndPoint)client.Client.LocalEndPoint).Address.ToString());
-                 NetworkStream stream = null;
-                 try
+                 using (client)
                  {
-                     stream = client.GetStream();
-                     var data = new byte[1024];
-                     var builder = new StringBuilder();
-                     do
+                     var ip = ((IPEndPoint) client.Client.LocalEndPoint).Address;
+                     Console.WriteLine($"New connection {ip}");
+                     using (var stream = client.GetStream())
                      {
-                         var bytes = stream.Read(data, 0, data.Length);
-                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                     } while (stream.DataAvailable);
-
-                     var container = JsonConvert.DeserializeObject<AppsContainer>(builder.ToString());
-                     dbWork.UpdateDB(container);
-
-                     SheetsUpdater(dbWork.GetAllData());
-                 }
-                 catch (Exception ex)
-                 {
-                     Console.WriteLine(ex.Message);
-                 }
-                 finally
-                 {
-                     Console.WriteLine("Connection " + ((IPEndPoint)client.Client.LocalEndPoint).Address.ToString()+" closed");
-                     stream?.Close();
-                     client?.Close();
-
+                         var container = AppsContainer.FromStream(stream);
+                         dbWork.UpdateDB(container);
+                         SheetsUpdater(dbWork.GetAllData());
+                     }
+                     Console.WriteLine($"Connection {ip} closed");
                  }
              });
 
@@ -86,23 +64,21 @@ namespace Server
             Network.TcpListen(port, callback);
             
         }
-       public static void SheetsUpdater(List<AppsContainer> container)
+
+        private static void SheetsUpdater(List<AppsContainer> container)
         {
-            if (container.Count == 0)
-                return;
-
-            AccessProvider accessProvider = new AccessProvider("GoogleSheetAccessProvider", "1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8");
-
-            List<IList<object>> data = new List<IList<object>>();
-            foreach (var comp in container)
+            lock (Locker)
             {
-                data.Add(new List<object> { comp.hostname, comp.date.ToString() });
-                data.Add(new List<object>());
-                foreach (var app in comp.apps)
+                if (container.Count == 0) return;
+                var accessProvider = new AccessProvider("GoogleSheetAccessProvider","1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8");
+                var data = new List<IList<object>>();
+                foreach (var comp in container)
                 {
-                    data.Add(new List<object> { app.name, app.version });
+                    data.Add(new List<object> {comp.hostname, comp.date.ToString()});
+                    data.Add(new List<object>());
+                    foreach (var app in comp.apps) data.Add(new List<object> {app.name, app.version});
+                    accessProvider.WriteData(data, comp.hostname);
                 }
-                accessProvider.WriteData(data, comp.hostname);
             }
         }
     }
