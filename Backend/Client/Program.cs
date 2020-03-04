@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using ClassLib;
@@ -11,11 +13,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Client
 {
-    class Program
+    static class Program
     {
-        private static JObject _config;
         private static string _serverIp;
         private static int _serverPort;
+        private static string _cacheFileName;
+        private static List<string> _filterNames;
+
         private static void Main(string[] args)
         {
             LoadConfig();
@@ -29,9 +33,11 @@ namespace Client
         {
             try
             {
-                _config = JObject.Parse(File.ReadAllText("config.json"));
-                _serverIp = _config["server"]["ip"].ToObject<string>();
-                _serverPort = _config["server"]["port"].ToObject<int>();
+                var config = JObject.Parse(File.ReadAllText("config.json"));
+                _serverIp = config["server"]["ip"].ToObject<string>();
+                _serverPort = config["server"]["port"].ToObject<int>();
+                _cacheFileName = config["cacheFile"].ToString();
+                _filterNames = config["filterNames"].ToObject<List<string>>();
             }
             catch (Exception e)
             {
@@ -39,29 +45,41 @@ namespace Client
                 Process.GetCurrentProcess().Kill();
             }
         }
-        static List<App> GetAppsList()
+        private static List<App> GetAppsList()
+        {
+            var softPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            var regArr = new List<RegistryKey>();
+            regArr.Add(GetKeyFromHive(RegistryHive.LocalMachine,softPath));
+            regArr.Add(GetKeyFromHive(RegistryHive.CurrentUser,softPath));
+            foreach (var user in RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry64).GetSubKeyNames())
+                regArr.Add(GetKeyFromHive(RegistryHive.Users, $@"{user}\{softPath}"));
+            var apps = new List<App>();
+            foreach (var key in regArr) apps.AddRange(GetAppsFromBranch(key));
+            apps = apps.Distinct().OrderBy(app=>app.name).ToList();
+            return apps;
+        }
+        private static RegistryKey GetKeyFromHive(RegistryHive hive,string path) => 
+            RegistryKey.OpenBaseKey(hive, RegistryView.Registry64).OpenSubKey(path);
+        private static List<App> GetAppsFromBranch(RegistryKey mainKey)
         {
             var apps = new List<App>();
-            var SoftwareKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            var rk = RegistryKey
-                .OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                .OpenSubKey(SoftwareKey);
-            foreach (var key in rk.GetSubKeyNames())
+            if (mainKey == null) return apps;
+            foreach (var subKey1 in mainKey.GetSubKeyNames())
             {
-                var subKey = rk.OpenSubKey(key);
-                var name = subKey?.GetValue("DisplayName");
-                if (name == null) continue;
-                var version = subKey.GetValue("DisplayVersion")?.ToString() ?? string.Empty;
-                apps.Add(new App(name.ToString(), version));
+                var subKey2 = mainKey.OpenSubKey(subKey1);
+                var nameValue = subKey2?.GetValue("DisplayName");
+                if (nameValue == null || _filterNames.Any(n => nameValue.ToString().StartsWith(n))) continue;
+                var versionValue = subKey2.GetValue("DisplayVersion");
+                var version = versionValue?.ToString() ?? string.Empty;
+                apps.Add(new App(nameValue.ToString(), version));
             }
             return apps;
         }
         private static List<App> GetDifference(List<App> apps)
         {
-            var name = _config["cacheFile"].ToString();
             var result = new List<App>();
-            if (!File.Exists(name)) return apps;
-            var cached = JsonConvert.DeserializeObject<List<App>>(File.ReadAllText(name));
+            if (!File.Exists(_cacheFileName)) return apps;
+            var cached = JsonConvert.DeserializeObject<List<App>>(File.ReadAllText(_cacheFileName));
             foreach (var app in apps)
             {
                 var cachedApp = cached.Find(a => a.name == app.name);
@@ -79,10 +97,9 @@ namespace Client
         }
         private static void SaveToCache(List<App> apps)
         {
-            var name = _config["cacheFile"].ToString();
             var json = JsonConvert.SerializeObject(apps);
-            File.Delete(name);
-            using (var writer = File.CreateText(name))
+            File.Delete(_cacheFileName);
+            using (var writer = File.CreateText(_cacheFileName))
                 writer.Write(json);
         }
     }
