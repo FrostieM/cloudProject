@@ -29,7 +29,7 @@ namespace Server
         static void Main(string[] args)
         {
             
-            config = JObject.Parse(File.ReadAllText("config.json"));
+            config = JObject.Parse(File.ReadAllText("server_config.json"));
             var tray = config["tray"].ToObject<bool>();
             if (tray)
             {
@@ -54,7 +54,7 @@ namespace Server
                      {
                          var container = AppsContainer.FromStream(stream);
                          dbWork.UpdateDB(container);
-                         SheetsUpdater(dbWork.GetAllData());
+                         SheetsUpdater(dbWork.GetOneComputerData(container.hostname));
                      }
                      Console.WriteLine($"Connection {ip} closed");
                  }
