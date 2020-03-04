@@ -54,7 +54,7 @@ namespace Server
                      {
                          var container = AppsContainer.FromStream(stream);
                          dbWork.UpdateDB(container);
-                         SheetsUpdater(dbWork.GetAllData());
+                         SheetsUpdater(dbWork.GetOneComputerData(container.hostname));
                      }
                      Console.WriteLine($"Connection {ip} closed");
                  }

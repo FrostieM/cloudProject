@@ -123,5 +123,28 @@ namespace Server
                 db.SaveChangesAsync();
             }
         }
+
+        public static List<AppsContainer> GetOneComputerData(string hostname)
+        {
+            var appsContainers = new List<AppsContainer>();
+            using (var db = new ApplicationContext())
+            {
+                var computerId = GetComputerId(hostname);
+                if (computerId == 0)
+                {
+                    return appsContainers;
+                }
+                var computer = db.Computers.Where(cc=>cc.Id== computerId).ToList().FirstOrDefault();
+                var appsContainer = new AppsContainer { hostname = computer.Name, date = long.Parse(computer.UpdTime) };
+                var programs = db.Programs.Where(p => p.IdC == computer.Id).ToList();
+                foreach (var pr in programs)
+                {
+                    var app = new App(pr.Name, pr.Version);
+                    appsContainer.apps.Add(app);
+                }
+                appsContainers.Add(appsContainer); 
+            }
+            return appsContainers;
+        }
     }
 }
