@@ -16,7 +16,7 @@ namespace GoogleSheetAccessProviderLib
 
     public class SpreadsheetReader
     {
-        private readonly AccessProvider accessProvider = new AccessProvider("GoogleSheetAccessProvider", "1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8");
+        private readonly AccessProvider accessProvider = new AccessProvider();
 
         public ComputerInfo GetComputer(string computerName)
         {

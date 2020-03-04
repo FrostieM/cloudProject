@@ -1,16 +1,15 @@
+using System.Configuration;
+using System.Collections.Specialized;
 using System;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
-using Google.Apis.Drive.v3;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using Google.Apis.Download;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using System.Linq;
-using System.Dynamic;
 
 
 namespace GoogleSheetAccessProviderLib
@@ -18,16 +17,14 @@ namespace GoogleSheetAccessProviderLib
 	public class AccessProvider
     {
         private readonly string[] scopes = { SheetsService.Scope.Spreadsheets };
-        private string applicationName;
-        private string spreadsheetId;
+        private readonly string applicationName = "GoogleSheetAccessProvider";
+        private readonly string spreadsheetId = "1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8";
+        private readonly string apiKey = "AIzaSyAIdlTNEWiVbkIyPsvOene6ZkpbmD5hmck";
         private SheetsService service;
 
-        public AccessProvider(string AppName, string SpreadsheetId)
+        public AccessProvider()
         {
-            applicationName = AppName;  // "GoogleSheetAccessProvider";
-            spreadsheetId = SpreadsheetId;  //"1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8"
-            var credential = GetSheetCredential();
-            service = GetSheetsService(credential);
+            service = GetSheetsService();
         }
 
         public void WriteData(IList<IList<object>> data, string sheetName)
@@ -116,7 +113,7 @@ namespace GoogleSheetAccessProviderLib
             return sheetList;
         }
 
-        private UserCredential GetSheetCredential()
+        private UserCredential GetUserCredential()
         {
             using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
@@ -139,6 +136,15 @@ namespace GoogleSheetAccessProviderLib
                     HttpClientInitializer = credential,
                     ApplicationName = applicationName
                 });
+        }
+
+        private SheetsService GetSheetsService()
+        {
+            return new SheetsService(new BaseClientService.Initializer()
+            {
+                ApplicationName = applicationName,
+                ApiKey = apiKey
+            });
         }
     }
 }
