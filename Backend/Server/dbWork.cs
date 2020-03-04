@@ -41,7 +41,6 @@ namespace Server
                 db.Programs.AddRange(programs.AsEnumerable());
                 Console.WriteLine($"Programs {programs.Count} added to DB for {comp.Name}");
                 db.SaveChangesAsync();
-
             }
         }
 
@@ -58,29 +57,31 @@ namespace Server
                         Id = computerId, Name = container.hostname, UpdTime = container.date.ToString()
                     };
                     db.Computers.AddOrUpdate(comp);
+                    int i = 0, u = 0, d = 0;
                     foreach (var app in container.apps)
                     {
                         if (app.status == AppStatus.Installed && GetProgramId(app.name) == 0)
                         {
                             db.Programs.Add(new Program {Name = app.name, Version = app.version, IdC = computerId});
-                            Console.WriteLine("1 program added for " + container.hostname);
+                            i++;
                         }
                         else if (app.status == AppStatus.Updated)
                         {
                             var programId = GetProgramId(app.name);
                             var pr = db.Programs.FirstOrDefault(c => c.Id == programId);
                             pr.Version = app.version;
-                            Console.WriteLine("1 program updated for " + container.hostname);
+                            u++;
                         }
                         else if (app.status == AppStatus.Deleted)
                         {
                             var programId = GetProgramId(app.name);
                             var pr = db.Programs.FirstOrDefault(o => o.Id == programId);
                             db.Programs.Remove(pr);
-                            Console.WriteLine("1 program deleted for " + container.hostname);
+                            d++;
                         }
                     }
                     db.SaveChangesAsync();
+                    Console.WriteLine($"Installed: {i}; Updated: {u}; Deleted: {d}");
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace Server
         static void Main(string[] args)
         {
             
-            config = JObject.Parse(File.ReadAllText("config.json"));
+            config = JObject.Parse(File.ReadAllText("server_config.json"));
             var tray = config["tray"].ToObject<bool>();
             if (tray)
             {
