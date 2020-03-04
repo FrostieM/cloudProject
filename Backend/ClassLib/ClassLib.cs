@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
@@ -26,6 +26,15 @@ namespace ClassLib
         }
 
         public override string ToString() => $"{name} {version}";
+
+        public override int GetHashCode() => $"{name} {version}".GetHashCode();
+        
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType()) return false;
+            var p = (App)obj;
+            return name == p.name && version == p.version;
+        }
     }
 
     public class AppsContainer
