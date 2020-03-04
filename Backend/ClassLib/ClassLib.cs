@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -41,8 +42,20 @@ namespace ClassLib
 
         public byte[] GetBytes()
         {
-            var jsoned = JsonConvert.SerializeObject(this);
-            return Encoding.Unicode.GetBytes(jsoned);
+            return Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(this));
+        }
+
+        public static AppsContainer FromStream(NetworkStream stream)
+        {
+            var data = new byte[1024];
+            var builder = new StringBuilder();
+            do
+            {
+                var bytes = stream.Read(data, 0, data.Length);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            } while (stream.DataAvailable);
+
+            return JsonConvert.DeserializeObject<AppsContainer>(builder.ToString());
         }
     }
 }
