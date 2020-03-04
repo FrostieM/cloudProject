@@ -1,16 +1,14 @@
 ﻿using ClassLib;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server
 {
     public static class dbWork
     {
-   
-        static public int GetComputerId(string name)
+        private static int GetComputerId(string name)
         {
             using (var db = new ApplicationContext())
             {
@@ -18,95 +16,87 @@ namespace Server
                 return computerId;
             }
         }
-        static public int GetProgramId(string name)
+
+        private static int GetProgramId(string name)
         {
             using (var db = new ApplicationContext())
             {
-                var programId = db.Programs.Where(pr => pr.Name == name).Select(pr => pr.Id).FirstOrDefault();
-                return programId;
+                return db.Programs.Where(pr => pr.Name == name).Select(pr => pr.Id).FirstOrDefault();
             }
         }
-        static public void InsertNewComputer(AppsContainer container)
+
+        private static void InsertNewComputer(AppsContainer container)
         {
           
             using (var db = new ApplicationContext())
             {
                 var comp = new Computer { Name = container.hostname, UpdTime = container.date.ToString() };
-                List<Program> programs = new List<Program>();
+                var programs = new List<Program>();
                 db.Computers.Add(comp);
-                Console.WriteLine("Computer "+comp.Name+ " added");
+                Console.WriteLine($"Computer {comp.Name} added");
                 db.SaveChangesAsync();
-                int newComputerId = GetComputerId(comp.Name);
+                var newComputerId = GetComputerId(comp.Name);
                 foreach (var app in container.apps)
-                {
-                    programs.Add(new Program { Name = app.name, Version = app.version, IdC = newComputerId});
-                }
-
+                    programs.Add(new Program {Name = app.name, Version = app.version, IdC = newComputerId});
                 db.Programs.AddRange(programs.AsEnumerable());
-                Console.WriteLine("Programs " + programs.Count + " added for "+ comp.Name);
+                Console.WriteLine($"Programs {programs.Count} added to DB for {comp.Name}");
                 db.SaveChangesAsync();
 
             }
         }
-        static public void UpdateDB(AppsContainer container)
+
+        public static void UpdateDB(AppsContainer container)
         {
-                int computerId= GetComputerId(container.hostname);
-                if (computerId == 0)
-                    InsertNewComputer(container);
-                else
+            var computerId = GetComputerId(container.hostname);
+            if (computerId == 0) InsertNewComputer(container);
+            else
+            {
+                using (var db = new ApplicationContext())
                 {
+                    var comp = new Computer
+                    {
+                        Id = computerId, Name = container.hostname, UpdTime = container.date.ToString()
+                    };
+                    db.Computers.AddOrUpdate(comp);
                     foreach (var app in container.apps)
                     {
-                        if (app.status == AppStatus.Installed && GetProgramId(app.name)==0)
+                        if (app.status == AppStatus.Installed && GetProgramId(app.name) == 0)
                         {
-                            using (var db = new ApplicationContext())
-                            {
-                                db.Programs.Add(new Program { Name = app.name, Version = app.version, IdC = computerId });
-                                Console.WriteLine("1 program added for " + container.hostname);
-                                db.SaveChangesAsync();
-                            }
+                            db.Programs.Add(new Program {Name = app.name, Version = app.version, IdC = computerId});
+                            Console.WriteLine("1 program added for " + container.hostname);
                         }
                         else if (app.status == AppStatus.Updated)
                         {
-                            using (var db = new ApplicationContext())
-                            {
-                                int programId = GetProgramId(app.name);
-                                var pr = db.Programs.Where(c => c.Id == programId).FirstOrDefault();
-                                pr.Version = app.version;
+                            var programId = GetProgramId(app.name);
+                            var pr = db.Programs.FirstOrDefault(c => c.Id == programId);
+                            pr.Version = app.version;
                             Console.WriteLine("1 program updated for " + container.hostname);
-                            db.SaveChangesAsync();
-                            }
                         }
-                        else if(app.status == AppStatus.Deleted)
+                        else if (app.status == AppStatus.Deleted)
                         {
-                            using (var db = new ApplicationContext())
-                            {
-                                int programId = GetProgramId(app.name);
-                                var pr = db.Programs.Where(o => o.Id == programId).FirstOrDefault();
-                                db.Programs.Remove(pr);
-                                Console.WriteLine("1 program deleted for " + container.hostname);
-                                db.SaveChangesAsync();
-                            }
-                           
+                            var programId = GetProgramId(app.name);
+                            var pr = db.Programs.FirstOrDefault(o => o.Id == programId);
+                            db.Programs.Remove(pr);
+                            Console.WriteLine("1 program deleted for " + container.hostname);
                         }
                     }
+                    db.SaveChangesAsync();
                 }
+            }
         }
         public static List<AppsContainer> GetAllData()
         {
-            List<AppsContainer> appsContainers = new List<AppsContainer>();
+            var appsContainers = new List<AppsContainer>();
             using (var db = new ApplicationContext())
             {
-                List<Computer> computers = db.Computers.ToList();
+                var computers = db.Computers.ToList();
                 foreach(var comp in computers)
                 {
-                    AppsContainer appsContainer = new AppsContainer();
-                    appsContainer.hostname = comp.Name;
-                    appsContainer.date = long.Parse(comp.UpdTime);
-                    List<Program> programs = db.Programs.Where(p=>p.IdC==comp.Id).ToList();
+                    var appsContainer = new AppsContainer {hostname = comp.Name, date = long.Parse(comp.UpdTime)};
+                    var programs = db.Programs.Where(p=>p.IdC==comp.Id).ToList();
                     foreach (var pr in programs)
                     {
-                        App app = new App(pr.Name, pr.Version);
+                        var app = new App(pr.Name, pr.Version);
                         appsContainer.apps.Add(app);
                     }
                     appsContainers.Add(appsContainer);
@@ -118,15 +108,15 @@ namespace Server
         {
             using (var db = new ApplicationContext())
             {
-                List<Computer> computers = db.Computers.ToList();
+                var computers = db.Computers.ToList();
                 foreach (var comp in computers)
                 {
-                    List<Program> programs = db.Programs.Where(p => p.IdC == comp.Id).ToList();
+                    var programs = db.Programs.Where(p => p.IdC == comp.Id).ToList();
                     db.Programs.RemoveRange(programs.AsQueryable());
                 }
                 db.Computers.RemoveRange(computers.AsQueryable());
 
-                string deleteSqliteSequence = "DELETE FROM sqlite_sequence";
+                var deleteSqliteSequence = "DELETE FROM sqlite_sequence";
                 db.Database.ExecuteSqlCommand(deleteSqliteSequence);
 
                 Console.WriteLine("DB cleared");

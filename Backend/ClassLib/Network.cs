@@ -42,7 +42,7 @@ namespace ClassLib
                 {
                     client = new TcpClient(ip, port);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Thread.Sleep(5000);
                 }
