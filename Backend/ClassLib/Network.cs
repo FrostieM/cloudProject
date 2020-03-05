@@ -33,7 +33,8 @@ namespace ClassLib
             catch (Exception ex){Console.WriteLine(ex.Message);}
             finally{listener?.Stop();}
         }
-        public static TcpClient GetConnectionClient(string ip, int port)
+
+        private static TcpClient GetConnectionClient(string ip, int port)
         {
             TcpClient client = null;
             do
@@ -42,8 +43,9 @@ namespace ClassLib
                 {
                     client = new TcpClient(ip, port);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
+                    Console.WriteLine("Connection not established. Repeat after 5 seconds.");
                     Thread.Sleep(5000);
                 }
             } while (client == null || !client.Connected);
