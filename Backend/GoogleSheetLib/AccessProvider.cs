@@ -7,23 +7,50 @@ using Google.Apis.Util.Store;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 
 namespace GoogleSheetAccessProviderLib
 {
+    public enum AccessType { ApiKey, User, ServiceAccount };
+
     public class AccessProvider
     {
-        private readonly string[] scopes = {SheetsService.Scope.Spreadsheets};
-        private string applicationName;
-        private string spreadsheetId;
+        private static JObject config = JObject.Parse(File.ReadAllText("spreadsheet_config.json"));
+
+        private readonly string[] scopes = { SheetsService.Scope.Spreadsheets };
+        private readonly string applicationName = config["ApplicationName"].ToString();
+        private readonly string spreadsheetId = config["SpreadsheetId"].ToString();
+        private readonly string serviceAccount = config["ServiceAccount"].ToString();
+        private readonly string apiKey = config["ApiKey"].ToString();
         private SheetsService service;
 
-        public AccessProvider(string AppName, string SpreadsheetId)
+        public AccessProvider(AccessType accessType)
         {
-            applicationName = AppName; // "GoogleSheetAccessProvider";
-            spreadsheetId = SpreadsheetId; //"1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8"
-            var credential = GetSheetCredential();
-            service = GetSheetsService(credential);
+
+            switch (accessType)
+            {
+                case AccessType.ApiKey:
+                    {
+                        service = GetSheetsService();
+                    }
+                    break;
+                case AccessType.User:
+                    {
+                        var credential = GetUserCredential();
+                        service = GetSheetsService(credential);
+                    }
+                    break;
+                case AccessType.ServiceAccount:
+                    {
+                        var credential = GetServiceAccountCredential();
+                        service = GetSheetsService(credential);
+                    }
+                    break;
+                default:
+                    service = GetSheetsService();
+                    break;
+            }
         }
 
         public void WriteData(IList<IList<object>> data, string sheetName)
@@ -106,7 +133,7 @@ namespace GoogleSheetAccessProviderLib
             return spreadsheet.Sheets.Select(sheet => sheet.Properties.Title).ToList();
         }
 
-        private UserCredential GetSheetCredential()
+        private UserCredential GetUserCredential()
         {
             using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
@@ -121,7 +148,24 @@ namespace GoogleSheetAccessProviderLib
             }
         }
 
-        private SheetsService GetSheetsService(UserCredential credential)
+        private ServiceAccountCredential GetServiceAccountCredential()
+        {
+            using (Stream stream = new FileStream("service_account_secret.json", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                var credential = (ServiceAccountCredential)
+                    GoogleCredential.FromStream(stream).UnderlyingCredential;
+
+                var initializer = new ServiceAccountCredential.Initializer(credential.Id)
+                {
+                    User = serviceAccount,
+                    Key = credential.Key,
+                    Scopes = scopes
+                };
+                return new ServiceAccountCredential(initializer);
+            }
+        }
+
+        private SheetsService GetSheetsService(ICredential credential)
         {
             return new SheetsService(
                 new BaseClientService.Initializer()
@@ -129,6 +173,15 @@ namespace GoogleSheetAccessProviderLib
                     HttpClientInitializer = credential,
                     ApplicationName = applicationName
                 });
+        }
+
+        private SheetsService GetSheetsService()
+        {
+            return new SheetsService(new BaseClientService.Initializer()
+            {
+                ApplicationName = applicationName,
+                ApiKey = apiKey
+            });
         }
     }
 }

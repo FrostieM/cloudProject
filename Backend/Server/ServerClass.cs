@@ -31,38 +31,34 @@ namespace Server
             
             config = JObject.Parse(File.ReadAllText("server_config.json"));
             var tray = config["tray"].ToObject<bool>();
-            if (tray)
-            {
-                ShowWindow(GetConsoleWindow(), 0);
-                var icon = new NotifyIcon {Icon = new Icon("icon.ico"), Visible = true};
-            }
-            else
-            {
-                ShowWindow(GetConsoleWindow(), 1); 
-            }
+            ShowWindow(GetConsoleWindow(), tray ? 0 : 1);
+            if(tray) new NotifyIcon { Icon = new Icon("icon.ico"), Visible = true };
             var startDB = config["clearDB"].ToObject<bool>();
             if (startDB) dbWork.ClearDB();
             var port = config["port"].ToObject<int>();
-
             var callback = new Action<TcpClient>(client =>
-             {
-                 using (client)
-                 {
-                     var ip = ((IPEndPoint) client.Client.LocalEndPoint).Address;
-                     Console.WriteLine($"New connection {ip}");
-                     using (var stream = client.GetStream())
-                     {
-                         var container = AppsContainer.FromStream(stream);
-                         dbWork.UpdateDB(container);
-                         SheetsUpdater(dbWork.GetOneComputerData(container.hostname));
-                     }
-                     Console.WriteLine($"Connection {ip} closed");
-                 }
-             });
-
+            {
+                var ip = ((IPEndPoint)client.Client.LocalEndPoint).Address;
+                Console.WriteLine($"New connection {ip}");
+                try
+                {
+                    NetworkStream stream = null;
+                    try
+                    {
+                        stream = client.GetStream();
+                        var container = AppsContainer.FromStream(stream);
+                        dbWork.UpdateDB(container);
+                        SheetsUpdater(dbWork.GetOneComputerData(container.hostname));
+                    }
+                    catch (Exception e) { Console.WriteLine(e); }
+                    finally { stream?.Close(); Console.WriteLine($"Stream {ip} closed!"); }
+                }
+                catch (Exception e) { Console.WriteLine(e); }
+                finally { client.Close(); Console.WriteLine($"Connection {ip} closed!"); }
+            });
             SheetsUpdater(dbWork.GetAllData());
+            Console.WriteLine("Start listening...");
             Network.TcpListen(port, callback);
-            
         }
 
         private static void SheetsUpdater(List<AppsContainer> container)
@@ -70,7 +66,7 @@ namespace Server
             lock (Locker)
             {
                 if (container.Count == 0) return;
-                var accessProvider = new AccessProvider("GoogleSheetAccessProvider","1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8");
+                var accessProvider = new AccessProvider(AccessType.ServiceAccount);
                 var data = new List<IList<object>>();
                 foreach (var comp in container)
                 {

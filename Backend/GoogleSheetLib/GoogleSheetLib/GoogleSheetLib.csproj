@@ -11,10 +11,4 @@
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.44.0.1877" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="client_secret.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
