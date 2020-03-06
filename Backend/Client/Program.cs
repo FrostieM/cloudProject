@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,35 +12,42 @@ using Newtonsoft.Json.Linq;
 
 namespace Client
 {
+    class Config
+    {
+        public string ServerIP;
+        public int ServerPort;
+        public string CacheFileName;
+        public List<string> FilterNames;
+    }
     static class Program
     {
-        private static string _serverIp;
-        private static int _serverPort;
-        private static string _cacheFileName;
-        private static List<string> _filterNames;
+        private static Config config;
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             LoadConfig();
             var apps = GetAppsList();
             var diff = GetDifference(apps);
             var data = new AppsContainer { apps = diff, hostname = Dns.GetHostName() }.GetBytes();
-            Network.TcpSend(data, _serverIp, _serverPort);
+            Network.TcpSend(data, config.ServerIP, config.ServerPort);
             SaveToCache(apps);
         }
         private static void LoadConfig()
         {
             try
             {
-                var config = JObject.Parse(File.ReadAllText("config.json"));
-                _serverIp = config["server"]["ip"].ToObject<string>();
-                _serverPort = config["server"]["port"].ToObject<int>();
-                _cacheFileName = config["cacheFile"].ToString();
-                _filterNames = config["filterNames"].ToObject<List<string>>();
+                var json = JObject.Parse(File.ReadAllText("config.json"));
+                config = new Config
+                {
+                    ServerIP = json["ip"].ToObject<string>(),
+                    ServerPort = json["port"].ToObject<int>(),
+                    CacheFileName = json["cacheFile"].ToString(),
+                    FilterNames = json["filterNames"].ToObject<List<string>>()
+                };
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.ToString());
                 Process.GetCurrentProcess().Kill();
             }
         }
@@ -68,7 +74,7 @@ namespace Client
             {
                 var subKey2 = mainKey.OpenSubKey(subKey1);
                 var nameValue = subKey2?.GetValue("DisplayName");
-                if (nameValue == null || _filterNames.Any(n => nameValue.ToString().StartsWith(n))) continue;
+                if (nameValue == null || config.FilterNames.Any(n => nameValue.ToString().StartsWith(n))) continue;
                 var versionValue = subKey2.GetValue("DisplayVersion");
                 var version = versionValue?.ToString() ?? string.Empty;
                 apps.Add(new App(nameValue.ToString(), version));
@@ -78,8 +84,8 @@ namespace Client
         private static List<App> GetDifference(List<App> apps)
         {
             var result = new List<App>();
-            if (!File.Exists(_cacheFileName)) return apps;
-            var cached = JsonConvert.DeserializeObject<List<App>>(File.ReadAllText(_cacheFileName));
+            if (!File.Exists(config.CacheFileName)) return apps;
+            var cached = JsonConvert.DeserializeObject<List<App>>(File.ReadAllText(config.CacheFileName));
             foreach (var app in apps)
             {
                 var cachedApp = cached.Find(a => a.name == app.name);
@@ -98,8 +104,8 @@ namespace Client
         private static void SaveToCache(List<App> apps)
         {
             var json = JsonConvert.SerializeObject(apps);
-            File.Delete(_cacheFileName);
-            using (var writer = File.CreateText(_cacheFileName))
+            File.Delete(config.CacheFileName);
+            using (var writer = File.CreateText(config.CacheFileName))
                 writer.Write(json);
         }
     }
