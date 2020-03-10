@@ -26,6 +26,8 @@
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\assets\computer.svg" />
+        <Content Include="ClientApp\src\assets\icon.png" />
+        <Content Include="ClientApp\src\assets\menu.png" />
         <Content Include="ClientApp\src\assets\monitor.svg" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />

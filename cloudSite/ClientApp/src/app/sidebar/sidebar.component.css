@@ -1,4 +1,77 @@
-.bd-computer:hover,
-.selected {
-  background-color: #236477;
+/* Элементы меню*/
+.items{
+  display: grid;
+  grid-template-columns:repeat(4,auto);
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  background-color: white;
+
 }
+.menu-btn{
+  width: 30px;
+  height: 30px;
+  background-color: #333;
+}
+.items .img{
+  vertical-align:middle;
+
+}
+.items .text{
+  align-items: center;
+  padding: 10px;
+  color: black;
+
+}
+
+.items .num{
+  display: grid;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  background-color: #2c2c2c;
+  border-radius: 5px;
+}
+
+.items:hover, .selected {
+  background: #f46602;
+}
+
+/*меню*/
+.menu{
+  position: fixed;
+  left: 0;top:0;
+  z-index: 99;
+  padding-right: 1%;
+  height: 100vh;
+  display: flex;
+  transition: 0.5s;
+  transform: translateX(-100%);
+}
+.menu_active{
+  transform:translateX(0%);
+}
+.menu-list{
+  background-color: #2c2c2c;
+  display: flex;
+  align-content: flex-start;
+  flex-direction: column;
+}
+.menu-list a{
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 900;
+  text-align: center;
+  justify-content: center;
+}
+.menu-btn {
+
+  position: absolute;
+  top:1%;
+  right: -10%;
+  transition-duration: .6s;
+}
+.menu-btn:hover {
+
+  transform: scale(1.5); }

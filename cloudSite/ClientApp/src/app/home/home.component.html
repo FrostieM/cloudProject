@@ -1,50 +1,45 @@
-<div class="row">
+<div class="wrapper" id="wrapper">
 
-  <div class="col-3 m-0 p-0">
-    <app-sidebar (messageToShowComputerInfo)="Computer = $event"></app-sidebar>
-  </div>
+  <app-sidebar (messageToShowComputerInfo)="Computer = $event"></app-sidebar>
 
-  <div *ngIf="Computer" class="col-9 m-0 p-0">
+  <div *ngIf="Computer" class="Information" id="Information">
 
-    <div class="card p-0 col-10 offset-1 text-center">
-      <div class="card-header bg-blue text-white">
-        Computer: {{Computer}}, Last Update: {{computerViewData?.computerInfo.date}}
+    <div class="header">
+      Computer: {{Computer}}, Last Update: {{computerViewData?.computerInfo.date|date}}
+    </div>
+
+    <div class="programs">
+      <div *ngFor="let app of computerViewData?.computerInfo.apps" class="prog">
+        {{app}}
+      </div>
+    </div>
+
+    <div *ngIf="computerViewData"  class="next">
+
+      <div class="Num">
+        <button class="btn text-white"
+                [disabled]="computerViewData?.pagination.currentPage == 1"
+                (click)="getComputerInfo(_computer, computerViewData.pagination.currentPage - 1)">
+          Previous
+        </button>
       </div>
 
-      <ul class="list-group list-group-flush">
-        <li *ngFor="let app of computerViewData?.computerInfo.apps" class="list-group-item">{{app}}</li>
-      </ul>
-
-      <div class="card-footer bg-blue text-white">
-
-        <nav *ngIf="computerViewData" aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item" >
-              <button class="btn text-white"
-                      [disabled]="computerViewData?.pagination.currentPage == 1"
-                      (click)="getComputerInfo(_computer, computerViewData.pagination.currentPage - 1)">
-                Previous
-              </button>
-            </li>
-
-            <li *ngFor="let page of getPages()" class="page-item">
-              <button class="btn text-white"
-                      [disabled]="computerViewData?.pagination.currentPage == page"
-                      (click)="getComputerInfo(_computer, page)">
-                {{page}}
-              </button>
-            </li>
-
-            <li class="page-item">
-              <button class="btn text-white"
-                      [disabled]="computerViewData?.pagination.currentPage == computerViewData?.pagination.pages"
-                      (click)="getComputerInfo(_computer, computerViewData.pagination.pages)">
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
+      <div *ngFor="let page of getPages()" class="Num">
+        <button class="btn text-white"
+                [disabled]="computerViewData?.pagination.currentPage == page"
+                (click)="getComputerInfo(_computer, page)">
+          {{page}}
+        </button>
       </div>
+
+      <div class="Num">
+        <button class="btn text-white"
+                [disabled]="computerViewData?.pagination.currentPage == computerViewData?.pagination.pages"
+                (click)="getComputerInfo(_computer, computerViewData.pagination.pages)">
+          Next
+        </button>
+      </div>
+
     </div>
 
   </div>
