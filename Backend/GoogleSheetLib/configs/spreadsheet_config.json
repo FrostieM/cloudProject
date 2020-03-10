@@ -1,8 +1,6 @@
 {
   "ApiKey": "AIzaSyAIdlTNEWiVbkIyPsvOene6ZkpbmD5hmck",
   "ApplicationName": "GoogleSheetAccessProvider",
-  "ProxyIp": "51.158.172.165",
-  "ProxyPort": "8811",
   "ServiceAccount": "accessprovider@noted-point-269720.iam.gserviceaccount.com",
   "SpreadsheetId": "1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8",
   "UseProxy": "true"

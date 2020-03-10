@@ -109,7 +109,7 @@ namespace GoogleSheetLib
 
         private UserCredential GetUserCredential()
         {
-            using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream("configs/client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "sheetCreds.json");
 
@@ -124,7 +124,7 @@ namespace GoogleSheetLib
 
         private ServiceAccountCredential GetServiceAccountCredential()
         {
-            using (Stream stream = new FileStream("service_account_secret.json", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (Stream stream = new FileStream("configs/service_account_secret.json", FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 var credential = (ServiceAccountCredential)
                     GoogleCredential.FromStream(stream).UnderlyingCredential;
