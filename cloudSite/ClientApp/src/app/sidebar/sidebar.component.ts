@@ -9,7 +9,7 @@ import {ComputerService} from "../shared/services/computer.service";
 })
 export class SidebarComponent implements OnInit{
 
-  public menuActive: boolean = false;
+  public menuActive: boolean = true;
 
   public computers: IComputer[];
   @Output() messageToShowComputerInfo = new EventEmitter<string>();
