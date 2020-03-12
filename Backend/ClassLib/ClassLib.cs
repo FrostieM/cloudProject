@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
-using System.Text;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ClassLib
 {
@@ -12,7 +12,7 @@ namespace ClassLib
         Updated,
         Deleted
     }
-
+    [Serializable]
     public class App
     {
         public AppStatus status;
@@ -36,7 +36,7 @@ namespace ClassLib
             return name == p.name && version == p.version;
         }
     }
-
+    [Serializable]
     public class AppsContainer
     {
         public string hostname;
@@ -51,20 +51,31 @@ namespace ClassLib
 
         public byte[] GetBytes()
         {
-            return Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(this));
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, this);
+                return stream.ToArray();
+            }
+        }
+
+        public static AppsContainer FromBytes(byte[] bytes)
+        {
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream(bytes))
+                return (AppsContainer) formatter.Deserialize(stream);
         }
 
         public static AppsContainer FromStream(NetworkStream stream)
         {
             var data = new byte[1024];
-            var builder = new StringBuilder();
-            do
+            using (var ms = new MemoryStream())
             {
-                var bytes = stream.Read(data, 0, data.Length);
-                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-            } while (stream.DataAvailable);
-
-            return JsonConvert.DeserializeObject<AppsContainer>(builder.ToString());
+                int count;
+                while ((count = stream.Read(data, 0, data.Length)) > 0) 
+                    ms.Write(data, 0, count);
+                return FromBytes(ms.ToArray());
+            }
         }
     }
 }
