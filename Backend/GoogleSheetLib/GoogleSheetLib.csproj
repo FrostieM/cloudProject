@@ -64,6 +64,7 @@
     <Compile Include="AccessProvider.cs" />
     <Compile Include="MoreLinq\MoreEnumerable.MinBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy.cs" />
     <Compile Include="ProxyHttpClientFactory.cs" />
     <Compile Include="SpreadsheetConfigReader.cs" />
     <Compile Include="SpreadsheetReader.cs" />

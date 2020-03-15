@@ -8,6 +8,7 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using System.Linq;
 using Google.Apis.Http;
+using System;
 
 namespace GoogleSheetLib
 {
@@ -20,44 +21,64 @@ namespace GoogleSheetLib
         private readonly string spreadsheetId = SpreadsheetConfigReader.SpreadsheetId;
         private readonly string serviceAccount = SpreadsheetConfigReader.ServiceAccount;
         private readonly string apiKey = SpreadsheetConfigReader.ApiKey;
-        private SheetsService service;
+        private readonly SheetsService service;
 
         public AccessProvider(AccessType accessType)
         {
             service = GetSheetsService(accessType);
         }
 
-        public void WriteData(IList<IList<object>> data, string sheetName)
-        {
-            if (GetSheetId(sheetName) == -1)
-                CreateNewSheet(sheetName);
+        public bool WriteData(IList<IList<object>> data, string sheetName)
+        {            
+            if (!HasSheet(sheetName))
+                    CreateNewSheet(sheetName);
 
-            ClearSheet(sheetName);
-            AppendEntries(data, sheetName);
+            if(ClearSheet(sheetName))
+                return AppendEntries(data, sheetName);
+
+            return false;
         }
 
-        public void AppendEntries(IList<IList<object>> data, string sheetName, string Range = "A:Z")
+        public bool AppendEntries(IEnumerable<IEnumerable<object>> data, string sheetName, string Range = "A:Z")
         {
             var range = $"{sheetName}!" + Range;
             var valueRange = new ValueRange();
 
-            valueRange.Values = data;
+            valueRange.Values = data.Cast<IList<object>>().ToList();
 
             var appendRequest = service.Spreadsheets.Values.Append(valueRange, spreadsheetId, range);
             appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.RAW;
-            appendRequest.Execute();
+
+            AppendValuesResponse response;
+            try { response = appendRequest.Execute(); }
+            catch (Exception e)
+            {
+                Console.WriteLine("AppendEntries method exception:\n" + e.Message);
+                response = null;
+            }
+
+            return response != null;
         }
 
-        public void ClearSheet(string sheetName, string Range = "A:Z")
+        public bool ClearSheet(string sheetName, string Range = "A:Z")
         {
             var range = $"{sheetName}!" + Range;
             var requestBody = new ClearValuesRequest();
 
             var deleteRequest = service.Spreadsheets.Values.Clear(requestBody, spreadsheetId, range);
-            deleteRequest.Execute();
-        }
 
-        public void CreateNewSheet(string sheetName)
+            ClearValuesResponse response;
+            try { response = deleteRequest.Execute(); }
+            catch (Exception e)
+            {
+                Console.WriteLine("ClearSheet method exception:\n" + e.Message);
+                response = null;
+            }
+
+            return response != null;
+        }
+        
+        public bool CreateNewSheet(string sheetName)
         {
             var addSheetRequest = new Request
             {
@@ -69,15 +90,42 @@ namespace GoogleSheetLib
                     }
                 }
             };
-
-            var requests = new List<Request> {addSheetRequest};
+            var requests = new List<Request> { addSheetRequest };
 
             var batchUpdate = new BatchUpdateSpreadsheetRequest();
             batchUpdate.Requests = requests;
-            service.Spreadsheets.BatchUpdate(batchUpdate, spreadsheetId).Execute();
+
+            BatchUpdateSpreadsheetResponse response;
+            try { response = service.Spreadsheets.BatchUpdate(batchUpdate, spreadsheetId).Execute(); }
+            catch (Exception e)
+            {
+                Console.WriteLine("CreateNewSheet method exception:\n" + e.Message);
+                response = null;
+            }
+
+            return response != null;
         }
 
-        private int GetSheetId(string sheetName)
+        public IEnumerable<IEnumerable<string>> ReadEntries(string sheetName, string Range = "A:Z")
+        {
+            var range = $"{sheetName}!" + Range;
+            var response = service.Spreadsheets.Values.Get(spreadsheetId, range).Execute();
+            var values = response.Values.Select(list => list.Select(listItem => listItem.ToString()));
+            return values;
+        }
+
+        public IEnumerable<string> GetSheetNames()
+        {
+            var spreadsheet = service.Spreadsheets.Get(spreadsheetId).Execute();
+            return spreadsheet.Sheets.Select(sheet => sheet.Properties.Title).ToList();
+        }
+
+        public bool HasSheet(string sheetName)
+        {
+            return GetSheetId(sheetName) != -1;
+        }
+
+        public int GetSheetId(string sheetName)
         {
             var spreadsheet = service.Spreadsheets.Get(spreadsheetId).Execute();
             var sheet = spreadsheet.Sheets.FirstOrDefault(s => s.Properties.Title == sheetName);
@@ -88,25 +136,7 @@ namespace GoogleSheetLib
             var sheetId = (int) sheet.Properties.SheetId;
             return sheetId;
         }
-
-        public IEnumerable<IEnumerable<string>> ReadEntries(string sheetName, string Range = "A:Z")
-        {
-            var range = $"{sheetName}!" + Range;
-            var request =
-                service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-            var response = request.Execute();
-            var values = response.Values.Select(list => list.Select(listItem => listItem.ToString()));
-            return values;
-        }
-
-        public IEnumerable<string> GetSheetNames()
-        {
-            var spreadsheet = service.Spreadsheets.Get(spreadsheetId).Execute();
-
-            return spreadsheet.Sheets.Select(sheet => sheet.Properties.Title).ToList();
-        }
-
+        
         private UserCredential GetUserCredential()
         {
             using (var stream = new FileStream("configs/client_secret.json", FileMode.Open, FileAccess.Read))
@@ -131,9 +161,7 @@ namespace GoogleSheetLib
 
                 var initializer = new ServiceAccountCredential.Initializer(credential.Id)
                 {
-                    HttpClientFactory = SpreadsheetConfigReader.UseProxy ?
-                                                new ProxyHttpClientFactory() :
-                                                new HttpClientFactory(),
+                    HttpClientFactory = GetHttpClientFactory(),
                     User = serviceAccount,
                     Key = credential.Key,
                     Scopes = scopes
@@ -147,9 +175,7 @@ namespace GoogleSheetLib
             return new SheetsService(
                 new BaseClientService.Initializer()
                 {
-                    HttpClientFactory = SpreadsheetConfigReader.UseProxy ?
-                                                new ProxyHttpClientFactory() :
-                                                new HttpClientFactory(),
+                    HttpClientFactory = GetHttpClientFactory(),
                     HttpClientInitializer = credential,
                     ApplicationName = applicationName
                 });
@@ -159,9 +185,7 @@ namespace GoogleSheetLib
         {
             return new SheetsService(new BaseClientService.Initializer()
             {
-                HttpClientFactory = SpreadsheetConfigReader.UseProxy ?
-                                                new ProxyHttpClientFactory() :
-                                                new HttpClientFactory(),
+                HttpClientFactory = GetHttpClientFactory(),
                 ApplicationName = applicationName,
                 ApiKey = apiKey
             });
@@ -175,6 +199,13 @@ namespace GoogleSheetLib
                     GetSheetsService(GetUserCredential());            
             else            
                 return GetSheetsService();            
+        }
+
+        private HttpClientFactory GetHttpClientFactory()
+        {
+            return SpreadsheetConfigReader.UseProxy ?
+                    new ProxyHttpClientFactory() :
+                    new HttpClientFactory();
         }
     }
 }
