@@ -9,21 +9,46 @@ import { HomeComponent } from './home/home.component';
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {ComputerService} from "./shared/services/computer.service";
 
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import {AuthComponent} from "./auth/auth.component";
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("339482668525-f218v14289blu55hvhccm6btb2re5c48.apps.googleusercontent.com")
+}]);
+
+export function provideConfig()
+{
+  return config;
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SidebarComponent
+    SidebarComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    SocialLoginModule.initialize(config),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'temp', component: HomeComponent, pathMatch: 'full'},
+      { path: '', component: AuthComponent}
     ])
   ],
-  providers: [ComputerService],
+  providers: [
+    ComputerService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
