@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ServerIP>127.0.0.1</ServerIP>
+  <ServerPort>8000</ServerPort>
+  <CacheFileName>.cache</CacheFileName>
+  <FilterNames>
+    <string>Microsoft Visual C++</string>
+    <string>Microsoft .NET</string>
+  </FilterNames>
+</Config>

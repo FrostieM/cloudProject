@@ -1,0 +1,12 @@
+{
+  "ApiKey" : "AIzaSyAIdlTNEWiVbkIyPsvOene6ZkpbmD5hmck",
+  "ApplicationName": "GoogleSheetAccessProvider",
+  "ProxyAddress" : "10.24.33.5",
+  "ProxyPassword" : "admin",
+  "ProxyPort" : "8000",
+  "ProxyUsername" : "admin",
+  "ServiceAccount" : "accessprovider@noted-point-269720.iam.gserviceaccount.com",
+  "SpreadsheetId" : "1LrsHlVFmjkWU3vV6HOH1cj25jsxAUyUYYCZ-wNPoeD8",
+  "UseCredentials" : "false",
+  "UseProxy" : "true"
+}
