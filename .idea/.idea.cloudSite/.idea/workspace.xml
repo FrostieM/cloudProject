@@ -34,94 +34,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47281090-e15a-4cc6-bb55-53a35749e05a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClassLib/ClassLib.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClassLib/ClassLib.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClassLib/Network.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client/Client.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Client/client_config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/AccessProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/GoogleSheetLib.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/client_secret.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/service_account_secret.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/spreadsheet_config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/MoreLinq/MoreEnumerable.MinBy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/Proxy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/ProxyHttpClientFactory.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/SpreadsheetConfigReader.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/SpreadsheetReader.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/app.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/client_secret.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/proxy_adresses.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/service_account_secret.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/spreadsheet_config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/packages.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/ApplicationContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/Computer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/InstalledPrograms.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/Server.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/ServerClass.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/dbWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/packages.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Server/server_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/shared/interfaces/application.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/GoogleSheetLib/GoogleSheetLib.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/GoogleSheetLib/client_secret.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/GoogleSheetLib/service_account_secret.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/GoogleSheetLib/spreadsheet_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/MoreLinq/MoreEnumerable.MinBy.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/SpreadsheetConfigReader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/configs/client_secret.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/configs/proxy_adresses.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/configs/service_account_secret.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudSite/configs/spreadsheet_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite.sln" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/browserslist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/protractor.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/protractor.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/src/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/src/app.po.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/src/app.po.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/tsconfig.e2e.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/e2e/tsconfig.e2e.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.cloudSite/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cloudSite/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.cloudSite/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cloudSite/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClassLib/ClassLib.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClassLib/ClassLib.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClassLib/Network.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client/App.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client/Client.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Client/client_config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/AccessProvider.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/GoogleSheetLib.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/client_secret.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/service_account_secret.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/GoogleSheetLib/spreadsheet_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/MoreLinq/MoreEnumerable.MinBy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/Proxy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/ProxyHttpClientFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/SpreadsheetConfigReader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/SpreadsheetReader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/app.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/client_secret.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/proxy_adresses.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/service_account_secret.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/configs/spreadsheet_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/GoogleSheetLib/packages.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/App.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/ApplicationContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/Computer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/InstalledPrograms.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/Server.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/ServerClass.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/dbWork.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/packages.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Server/server_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/AccessProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/AccessProvider.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.server.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.server.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/environments/environment.prod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/karma.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/polyfills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/polyfills.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.app.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.server.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.server.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.spec.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/tsconfig.spec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/tslint.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/tslint.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/tslint.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/tslint.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/shared/interfaces/computerInfo.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ClientApp/src/app/shared/interfaces/computerInfo.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/Controllers/ComputerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/Controllers/ComputerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/SpreadsheetReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/SpreadsheetReader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudSite/ViewData/ComputerViewData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/ViewData/ComputerViewData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cloudSite/cloudSite.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/cloudSite.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudSite/wwwroot/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/cloudSite/wwwroot/favicon.ico" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -130,6 +117,9 @@
     <setting file="file://$PROJECT_DIR$/cloudSite/ClientApp/package.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/cloudSite/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/cloudSite/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/cloudSite/ViewData/ComputerViewData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/cloudSite/AccessProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/cloudSite/Controllers/ComputerController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -140,7 +130,13 @@
         <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/auth/auth.component.css" />
         <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/auth/auth.component.html" />
         <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/auth/auth.component.ts" />
+        <option value="$PROJECT_DIR$/cloudSite/ViewData/ComputerViewData.cs" />
+        <option value="$PROJECT_DIR$/cloudSite/AccessProvider.cs" />
         <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/app.module.ts" />
+        <option value="$PROJECT_DIR$/cloudSite/Controllers/ComputerController.cs" />
+        <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/shared/interfaces/application.interface.ts" />
+        <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/shared/interfaces/computerInfo.interface.ts" />
+        <option value="$PROJECT_DIR$/cloudSite/ClientApp/src/app/home/home.component.html" />
       </list>
     </option>
   </component>
@@ -236,7 +232,7 @@
       <workItem from="1584290739530" duration="231000" />
       <workItem from="1584291140832" duration="5905000" />
       <workItem from="1584339826006" duration="7083000" />
-      <workItem from="1584390723807" duration="1211000" />
+      <workItem from="1584390723807" duration="3081000" />
     </task>
     <servers />
   </component>
@@ -263,22 +259,22 @@
       <screen x="0" y="30" width="1536" height="834" />
     </state>
     <state x="424" y="133" key="#Notifications/0.30.1536.834@0.30.1536.834" timestamp="1584291228095" />
-    <state width="1493" height="193" key="GridCell.Tab.0.bottom" timestamp="1584354872000">
+    <state width="1493" height="193" key="GridCell.Tab.0.bottom" timestamp="1584393973515">
       <screen x="0" y="30" width="1536" height="834" />
     </state>
-    <state width="1493" height="193" key="GridCell.Tab.0.bottom/0.30.1536.834@0.30.1536.834" timestamp="1584354872000" />
-    <state width="1493" height="193" key="GridCell.Tab.0.center" timestamp="1584354871999">
+    <state width="1493" height="193" key="GridCell.Tab.0.bottom/0.30.1536.834@0.30.1536.834" timestamp="1584393973515" />
+    <state width="1493" height="193" key="GridCell.Tab.0.center" timestamp="1584393973514">
       <screen x="0" y="30" width="1536" height="834" />
     </state>
-    <state width="1493" height="193" key="GridCell.Tab.0.center/0.30.1536.834@0.30.1536.834" timestamp="1584354871999" />
-    <state width="1493" height="193" key="GridCell.Tab.0.left" timestamp="1584354871999">
+    <state width="1493" height="193" key="GridCell.Tab.0.center/0.30.1536.834@0.30.1536.834" timestamp="1584393973514" />
+    <state width="1493" height="193" key="GridCell.Tab.0.left" timestamp="1584393973514">
       <screen x="0" y="30" width="1536" height="834" />
     </state>
-    <state width="1493" height="193" key="GridCell.Tab.0.left/0.30.1536.834@0.30.1536.834" timestamp="1584354871999" />
-    <state width="1493" height="193" key="GridCell.Tab.0.right" timestamp="1584354871999">
+    <state width="1493" height="193" key="GridCell.Tab.0.left/0.30.1536.834@0.30.1536.834" timestamp="1584393973514" />
+    <state width="1493" height="193" key="GridCell.Tab.0.right" timestamp="1584393973514">
       <screen x="0" y="30" width="1536" height="834" />
     </state>
-    <state width="1493" height="193" key="GridCell.Tab.0.right/0.30.1536.834@0.30.1536.834" timestamp="1584354871999" />
+    <state width="1493" height="193" key="GridCell.Tab.0.right/0.30.1536.834@0.30.1536.834" timestamp="1584393973514" />
     <state x="341" y="115" key="SettingsEditor" timestamp="1584291488876">
       <screen x="0" y="30" width="1536" height="834" />
     </state>

@@ -10,7 +10,8 @@
 
     <div class="programs">
       <div *ngFor="let app of computerViewData?.computerInfo.apps" class="prog">
-        {{app}}
+        <span>{{app.name}}</span>
+        <span *ngIf="app.version">, version: {{app.version}}</span>
       </div>
     </div>
 

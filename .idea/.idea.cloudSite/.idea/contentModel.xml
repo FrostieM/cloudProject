@@ -173,6 +173,7 @@
               </e>
               <e p="shared" t="Include">
                 <e p="interfaces" t="Include">
+                  <e p="application.interface.ts" t="Include" />
                   <e p="computer.interface.ts" t="Include" />
                   <e p="computerInfo.interface.ts" t="Include" />
                   <e p="computerViewData.interface.ts" t="Include" />
@@ -213,8 +214,23 @@
           <e p="tslint.json" t="Include" />
         </e>
         <e p="cloudSite.csproj" t="IncludeRecursive" />
+        <e p="configs" t="Include">
+          <e p="client_secret.json" t="Include" />
+          <e p="proxy_adresses.json" t="Include" />
+          <e p="service_account_secret.json" t="Include" />
+          <e p="spreadsheet_config.json" t="Include" />
+        </e>
         <e p="Controllers" t="Include">
           <e p="ComputerController.cs" t="Include" />
+        </e>
+        <e p="GoogleSheetLib" t="Include">
+          <e p="client_secret.json" t="Include" />
+          <e p="GoogleSheetLib.csproj" t="Include" />
+          <e p="service_account_secret.json" t="Include" />
+          <e p="spreadsheet_config.json" t="Include" />
+        </e>
+        <e p="MoreLinq" t="Include">
+          <e p="MoreEnumerable.MinBy.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -229,6 +245,7 @@
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
+        <e p="SpreadsheetConfigReader.cs" t="Include" />
         <e p="SpreadsheetReader.cs" t="Include" />
         <e p="Startup.cs" t="Include" />
         <e p="ViewData" t="Include">

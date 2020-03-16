@@ -1,5 +1,7 @@
-﻿export interface IComputerInfo {
+﻿import {IApplication} from "./application.interface";
+
+export interface IComputerInfo {
   name: string;
   date: Date;
-  apps: string[];
+  apps: IApplication[];
 }

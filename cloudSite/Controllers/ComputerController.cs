@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using cloudSite.ViewData;
-using GoogleSheetAccessProviderLib;
+using GoogleSheetLib;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cloudSite.Controllers
@@ -35,7 +34,7 @@ namespace cloudSite.Controllers
                 },
                 Pagination = new PaginationViewData
                 {
-                    TotalItems = computerInfo.Apps.Count,
+                    TotalItems = computerInfo.Apps.Count(),
                     CurrentPage = page,
                     PageSize = _pageSize
                 }

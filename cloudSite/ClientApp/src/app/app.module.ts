@@ -38,16 +38,13 @@ export function provideConfig()
     FormsModule,
     SocialLoginModule.initialize(config),
     RouterModule.forRoot([
-      { path: 'temp', component: HomeComponent, pathMatch: 'full'},
-      { path: '', component: AuthComponent}
+      { path: '', component: HomeComponent, pathMatch: 'full'},
+      { path: 'auth', component: AuthComponent}
     ])
   ],
   providers: [
     ComputerService,
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
-    }
+
   ],
   bootstrap: [AppComponent]
 })
