@@ -1,6 +1,5 @@
 ﻿using Google.Apis.Http;
 using System.Net.Http;
-using SCReader = GoogleSheetLib.SpreadsheetConfigReader;
 
 namespace GoogleSheetLib
 {

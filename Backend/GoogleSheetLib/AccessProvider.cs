@@ -21,17 +21,33 @@ namespace GoogleSheetLib
         private readonly string spreadsheetId = SpreadsheetConfigReader.SpreadsheetId;
         private readonly string serviceAccount = SpreadsheetConfigReader.ServiceAccount;
         private readonly string apiKey = SpreadsheetConfigReader.ApiKey;
-        private readonly SheetsService service;
+        private readonly AccessType accessType;
+        private SheetsService service = null;
 
-        public AccessProvider(AccessType accessType)
+        private SheetsService Service
         {
-            service = GetSheetsService(accessType);
+            get
+            {
+                if (service == null)
+                    service = GetSheetsService(accessType);
+                return service;
+            }
+        }
+
+        public AccessProvider(AccessType type)
+        {
+            accessType = type;
+            if (HasInternet())
+                service = GetSheetsService(accessType);
         }
 
         public bool WriteData(IList<IList<object>> data, string sheetName)
-        {            
+        {
+            if (!HasInternet(true))
+                return false;
+
             if (!HasSheet(sheetName))
-                    CreateNewSheet(sheetName);
+                CreateNewSheet(sheetName);
 
             if(ClearSheet(sheetName))
                 return AppendEntries(data, sheetName);
@@ -46,7 +62,7 @@ namespace GoogleSheetLib
 
             valueRange.Values = data.Cast<IList<object>>().ToList();
 
-            var appendRequest = service.Spreadsheets.Values.Append(valueRange, spreadsheetId, range);
+            var appendRequest = Service.Spreadsheets.Values.Append(valueRange, spreadsheetId, range);
             appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.RAW;
 
             AppendValuesResponse response;
@@ -65,7 +81,7 @@ namespace GoogleSheetLib
             var range = $"{sheetName}!" + Range;
             var requestBody = new ClearValuesRequest();
 
-            var deleteRequest = service.Spreadsheets.Values.Clear(requestBody, spreadsheetId, range);
+            var deleteRequest = Service.Spreadsheets.Values.Clear(requestBody, spreadsheetId, range);
 
             ClearValuesResponse response;
             try { response = deleteRequest.Execute(); }
@@ -96,7 +112,7 @@ namespace GoogleSheetLib
             batchUpdate.Requests = requests;
 
             BatchUpdateSpreadsheetResponse response;
-            try { response = service.Spreadsheets.BatchUpdate(batchUpdate, spreadsheetId).Execute(); }
+            try { response = Service.Spreadsheets.BatchUpdate(batchUpdate, spreadsheetId).Execute(); }
             catch (Exception e)
             {
                 Console.WriteLine("CreateNewSheet method exception:\n" + e.Message);
@@ -109,14 +125,14 @@ namespace GoogleSheetLib
         public IEnumerable<IEnumerable<string>> ReadEntries(string sheetName, string Range = "A:Z")
         {
             var range = $"{sheetName}!" + Range;
-            var response = service.Spreadsheets.Values.Get(spreadsheetId, range).Execute();
+            var response = Service.Spreadsheets.Values.Get(spreadsheetId, range).Execute();
             var values = response.Values.Select(list => list.Select(listItem => listItem.ToString()));
             return values;
         }
 
         public IEnumerable<string> GetSheetNames()
         {
-            var spreadsheet = service.Spreadsheets.Get(spreadsheetId).Execute();
+            var spreadsheet = Service.Spreadsheets.Get(spreadsheetId).Execute();
             return spreadsheet.Sheets.Select(sheet => sheet.Properties.Title).ToList();
         }
 
@@ -127,7 +143,7 @@ namespace GoogleSheetLib
 
         public int GetSheetId(string sheetName)
         {
-            var spreadsheet = service.Spreadsheets.Get(spreadsheetId).Execute();
+            var spreadsheet = Service.Spreadsheets.Get(spreadsheetId).Execute();
             var sheet = spreadsheet.Sheets.FirstOrDefault(s => s.Properties.Title == sheetName);
 
             if (sheet == null)
@@ -161,7 +177,6 @@ namespace GoogleSheetLib
 
                 var initializer = new ServiceAccountCredential.Initializer(credential.Id)
                 {
-                    HttpClientFactory = GetHttpClientFactory(),
                     User = serviceAccount,
                     Key = credential.Key,
                     Scopes = scopes
@@ -206,6 +221,17 @@ namespace GoogleSheetLib
             return SpreadsheetConfigReader.UseProxy ?
                     new ProxyHttpClientFactory() :
                     new HttpClientFactory();
+        }
+
+        private bool HasInternet(bool print = false)
+        {
+            var status = ConnectionChecker.HasInternet();
+            if(print)
+            {
+                var msg = status ? "Internet available." : "No internet!";
+                Console.WriteLine(msg);
+            }
+            return status;
         }
     }
 }

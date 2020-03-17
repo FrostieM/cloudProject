@@ -83,7 +83,7 @@ namespace GoogleSheetLib
             if (sheetData.ToList().Count == 0)
                 return null;
             
-            return sheetData.First().Last();
+            return sheetData.First().LastOrDefault();
         }   
     }
 }

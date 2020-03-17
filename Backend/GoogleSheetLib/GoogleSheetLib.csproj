@@ -62,12 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessProvider.cs" />
+    <Compile Include="ConnectionChecker.cs" />
     <Compile Include="MoreLinq\MoreEnumerable.MinBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
+    <Compile Include="ProxyAddressesReader.cs" />
     <Compile Include="ProxyHttpClientFactory.cs" />
     <Compile Include="SpreadsheetConfigReader.cs" />
     <Compile Include="SpreadsheetReader.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
