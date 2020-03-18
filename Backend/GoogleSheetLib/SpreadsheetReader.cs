@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GoogleSheetAccessProviderLib
+namespace GoogleSheetLib
 {
+    public class Application
+    {
+        public string Name { get; set; }
+        public string Version { get; set; }
+    }
+
     public class ComputerInfo
     {
         public string Name { get; set; }
-        public int AppsNum { get => Apps.Count; }
+        public int AppsNum { get => Apps.Count(); }
         public DateTime Date { get; set; }
-        public List<string> Apps { get; set; }
+        public IEnumerable<Application> Apps { get; set; }
     }
 
     public class SpreadsheetReader
@@ -21,7 +27,7 @@ namespace GoogleSheetAccessProviderLib
             var sheetData = GetSheetData(computerName);
             var seconds = double.Parse(GetDate(sheetData));
             var date = new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
-            var apps = GetApplications(sheetData).ToList();
+            var apps = GetApplications(sheetData);
 
             var comp = new ComputerInfo
             {
@@ -29,7 +35,6 @@ namespace GoogleSheetAccessProviderLib
                 Date = date,
                 Apps = apps
             };
-
             return comp;
         }
 
@@ -51,24 +56,26 @@ namespace GoogleSheetAccessProviderLib
             return accessProvider.ReadEntries(sheetName);
         }
 
-        private IEnumerable<string> GetApplications(IEnumerable<IEnumerable<string>> sheetData)
+        private IEnumerable<Application> GetApplications(IEnumerable<IEnumerable<string>> sheetData)
         {
             if (sheetData.ToList().Count == 0)
                 return null;
 
             sheetData = sheetData.Skip(2);
-            var result = new List<string>();
+            var applications = new List<Application>();
 
             foreach (var row in sheetData)
-            {                
-                string appData = null;
-                foreach (var cell in row)
-                    appData += cell + " ";
-                
-                result.Add(appData);
-            }
+            {
+                var app = new Application
+                {
+                    Name = row.ElementAtOrDefault(0),
+                    Version = row.ElementAtOrDefault(1)
+                };
 
-            return result;
+                if(!string.IsNullOrWhiteSpace(app.Name))
+                    applications.Add(app);
+            }
+            return applications;
         }
                
         private string GetDate(IEnumerable<IEnumerable<string>> sheetData)
@@ -76,7 +83,7 @@ namespace GoogleSheetAccessProviderLib
             if (sheetData.ToList().Count == 0)
                 return null;
             
-            return sheetData.First().Last();
+            return sheetData.First().LastOrDefault();
         }   
     }
 }
