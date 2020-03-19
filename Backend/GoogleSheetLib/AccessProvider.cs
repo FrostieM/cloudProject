@@ -228,7 +228,7 @@ namespace GoogleSheetLib
             var status = ConnectionChecker.HasInternet();
             if(print)
             {
-                var msg = status ? "Internet available." : "No internet!";
+                var msg = status ? "" : "No internet!";
                 Console.WriteLine(msg);
             }
             return status;
