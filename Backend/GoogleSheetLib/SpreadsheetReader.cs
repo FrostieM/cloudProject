@@ -8,6 +8,12 @@ namespace GoogleSheetLib
     {
         public string Name { get; set; }
         public string Version { get; set; }
+
+        public override string ToString()
+        {
+            var version = string.IsNullOrWhiteSpace(Version) ? "Unknown" : Version;
+            return string.Format($"{Name} version: {version}");
+        }
     }
 
     public class ComputerInfo
@@ -20,7 +26,7 @@ namespace GoogleSheetLib
 
     public class SpreadsheetReader
     {
-        private readonly AccessProvider accessProvider = new AccessProvider(AccessType.ApiKey);
+        private readonly AccessProvider accessProvider = new AccessProvider(AccessType.ServiceAccount);
 
         public ComputerInfo GetComputer(string computerName)
         {
