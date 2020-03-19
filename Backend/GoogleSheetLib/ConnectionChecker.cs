@@ -12,17 +12,23 @@ namespace GoogleSheetLib
 {
     static class ConnectionChecker
     {
+        private static readonly int responseTimeout = 2;
+        private static readonly int checkTimeout = 5;
+        private static readonly object locker = new object(); 
         private static IPEndPoint fastestAddress = null;
 
         public static IPEndPoint FastestProxyAddress
         {
             get
             {
-                if (fastestAddress == null)
-                    fastestAddress = GetFastestProxyAddress();
-                return fastestAddress;
+                lock(locker)
+                {
+                    if (fastestAddress == null)
+                        fastestAddress = GetFastestProxyAddress();
+                    return fastestAddress;
+                }
             }
-            set => fastestAddress = value;
+            set { lock (locker) { fastestAddress = value; } }
         }
 
         public static void FindNewFastestProxyAddress()
@@ -35,8 +41,9 @@ namespace GoogleSheetLib
             Console.WriteLine("Searching for the fastest proxy server...");
             var proxyAddresses = ProxyAddressesReader.Addresses.AsParallel().Select(GetProxyResponseTime)
                 .Select(task => task.Result).Where(result => result != null);
-            if (proxyAddresses.Count() > 0)
-            {
+
+            if (proxyAddresses?.Count() > 0)
+            {       
                 var fastestAddress = proxyAddresses.MinBy(adress => adress.Value.Value).Value.Key;
                 Console.WriteLine($"Connecting to proxy server [{fastestAddress}]...");
                 return Util.ToEndPoint(fastestAddress);
@@ -52,7 +59,7 @@ namespace GoogleSheetLib
                 var handler = new HttpClientHandler { Proxy = proxy, UseProxy = true };
                 using (var httpClient = new HttpClient(handler, true))
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(5);
+                    httpClient.Timeout = TimeSpan.FromSeconds(checkTimeout);
                     var responce = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://httpbin.org/ip"));
                     if (responce.IsSuccessStatusCode)
                         return true;
@@ -71,7 +78,7 @@ namespace GoogleSheetLib
             {
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(5);
+                    httpClient.Timeout = TimeSpan.FromSeconds(checkTimeout);
                     var responce = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://httpbin.org/ip"));
                     if (responce.IsSuccessStatusCode)
                         return true;
@@ -94,7 +101,7 @@ namespace GoogleSheetLib
                 var handler = new HttpClientHandler { Proxy = proxy, UseProxy = true };
                 using (var httpClient = new HttpClient(handler, true))
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(1);
+                    httpClient.Timeout = TimeSpan.FromSeconds(responseTimeout);
                     var stopwatch = Stopwatch.StartNew();
                     var responce = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://httpbin.org/ip"));
                     if (responce.IsSuccessStatusCode)

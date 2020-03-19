@@ -16,6 +16,8 @@ namespace GoogleSheetLib
 
     public class AccessProvider
     {
+        private static readonly object writeLocker = new object();
+        private static readonly object getLocker = new object();
         private readonly string[] scopes = { SheetsService.Scope.Spreadsheets };
         private readonly string applicationName = SpreadsheetConfigReader.ApplicationName;
         private readonly string spreadsheetId = SpreadsheetConfigReader.SpreadsheetId;
@@ -28,9 +30,12 @@ namespace GoogleSheetLib
         {
             get
             {
-                if (service == null)
-                    service = GetSheetsService(accessType);
-                return service;
+                lock(getLocker)
+                {
+                    if (service == null)
+                        service = GetSheetsService(accessType);
+                    return service;
+                }                
             }
         }
 
@@ -41,22 +46,28 @@ namespace GoogleSheetLib
                 service = GetSheetsService(accessType);
         }
 
-        public bool WriteData(IList<IList<object>> data, string sheetName)
+        public bool WriteData(IEnumerable<IEnumerable<object>> data, string sheetName)
         {
-            if (!HasInternet(true))
+            if (!HasInternet())
                 return false;
 
-            if (!HasSheet(sheetName))
-                CreateNewSheet(sheetName);
+            lock (writeLocker)
+            {
+                if (!HasSheet(sheetName))
+                    CreateNewSheet(sheetName);
 
-            if(ClearSheet(sheetName))
-                return AppendEntries(data, sheetName);
-
-            return false;
+                if (ClearSheet(sheetName))
+                    return AppendEntries(data, sheetName);
+            
+                return false;
+            }
         }
 
         public bool AppendEntries(IEnumerable<IEnumerable<object>> data, string sheetName, string Range = "A:Z")
         {
+            if (data == null)
+                return false;
+
             var range = $"{sheetName}!" + Range;
             var valueRange = new ValueRange();
 
@@ -126,14 +137,13 @@ namespace GoogleSheetLib
         {
             var range = $"{sheetName}!" + Range;
             var response = Service.Spreadsheets.Values.Get(spreadsheetId, range).Execute();
-            var values = response.Values.Select(list => list.Select(listItem => listItem.ToString()));
-            return values;
+            return response.Values?.Select(list => list.Select(listItem => listItem.ToString()));            
         }
 
         public IEnumerable<string> GetSheetNames()
         {
             var spreadsheet = Service.Spreadsheets.Get(spreadsheetId).Execute();
-            return spreadsheet.Sheets.Select(sheet => sheet.Properties.Title).ToList();
+            return spreadsheet.Sheets?.Select(sheet => sheet.Properties.Title).ToList();
         }
 
         public bool HasSheet(string sheetName)
@@ -144,7 +154,7 @@ namespace GoogleSheetLib
         public int GetSheetId(string sheetName)
         {
             var spreadsheet = Service.Spreadsheets.Get(spreadsheetId).Execute();
-            var sheet = spreadsheet.Sheets.FirstOrDefault(s => s.Properties.Title == sheetName);
+            var sheet = spreadsheet.Sheets?.FirstOrDefault(s => s.Properties.Title == sheetName);
 
             if (sheet == null)
                 return -1;
@@ -216,22 +226,16 @@ namespace GoogleSheetLib
                 return GetSheetsService();            
         }
 
-        private HttpClientFactory GetHttpClientFactory()
+        private IHttpClientFactory GetHttpClientFactory()
         {
             return SpreadsheetConfigReader.UseProxy ?
                     new ProxyHttpClientFactory() :
                     new HttpClientFactory();
         }
 
-        private bool HasInternet(bool print = false)
+        private bool HasInternet()
         {
-            var status = ConnectionChecker.HasInternet();
-            if(print)
-            {
-                var msg = status ? "" : "No internet!";
-                Console.WriteLine(msg);
-            }
-            return status;
+            return ConnectionChecker.HasInternet(); 
         }
     }
 }

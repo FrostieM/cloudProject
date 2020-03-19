@@ -19,8 +19,8 @@ namespace GoogleSheetLib
     public class ComputerInfo
     {
         public string Name { get; set; }
-        public int AppsNum { get => Apps.Count(); }
-        public DateTime Date { get; set; }
+        public int AppsNum { get => Apps == null ? 0 : Apps.Count(); }
+        public DateTime? Date { get; set; }
         public IEnumerable<Application> Apps { get; set; }
     }
 
@@ -31,8 +31,7 @@ namespace GoogleSheetLib
         public ComputerInfo GetComputer(string computerName)
         {
             var sheetData = GetSheetData(computerName);
-            var seconds = double.Parse(GetDate(sheetData));
-            var date = new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
+            var date = ToDateTime(GetDate(sheetData));
             var apps = GetApplications(sheetData);
 
             var comp = new ComputerInfo
@@ -50,10 +49,8 @@ namespace GoogleSheetLib
 
             var computersInfo = new List<ComputerInfo>();
             foreach (var name in compNames)
-            {
-                var comp = GetComputer(name);
-                computersInfo.Add(comp);
-            }
+                computersInfo.Add(GetComputer(name));
+
             return computersInfo;
         }
 
@@ -64,7 +61,7 @@ namespace GoogleSheetLib
 
         private IEnumerable<Application> GetApplications(IEnumerable<IEnumerable<string>> sheetData)
         {
-            if (sheetData.ToList().Count == 0)
+            if (sheetData == null)
                 return null;
 
             sheetData = sheetData.Skip(2);
@@ -86,10 +83,18 @@ namespace GoogleSheetLib
                
         private string GetDate(IEnumerable<IEnumerable<string>> sheetData)
         {
-            if (sheetData.ToList().Count == 0)
+            return sheetData?.FirstOrDefault()?.LastOrDefault();
+        }
+
+        private DateTime? ToDateTime(string strSeconds)
+        {
+            if (string.IsNullOrWhiteSpace(strSeconds))
                 return null;
-            
-            return sheetData.First().LastOrDefault();
-        }   
+
+            double seconds;
+            if (double.TryParse(strSeconds, out seconds))
+                return new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
+            return null;
+        }
     }
 }

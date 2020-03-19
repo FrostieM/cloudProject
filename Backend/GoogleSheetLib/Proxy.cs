@@ -6,11 +6,13 @@ namespace GoogleSheetLib
 {
     static class Proxy
     {
+        private static readonly object locker = new object();
         private static IWebProxy proxy = null;
         public static IWebProxy Get
         {
-            get => GetProxy();
-            set => proxy = value;
+
+            get { lock (locker) { return GetProxy(); } }
+            set { lock (locker) { proxy = value; } }
         }
 
         private static IWebProxy GetProxy()
@@ -25,6 +27,7 @@ namespace GoogleSheetLib
                 return proxy;
             else
             {
+                Console.WriteLine("Proxy server connection lost!");
                 ConnectionChecker.FindNewFastestProxyAddress();
                 proxy = new ProxyСustomizer().Proxy;
                 return proxy;
