@@ -1,3 +1,15 @@
-<h5>{{resultMessage}}</h5>
-<button (click)="logInWithGoogle()"> Google Login </button>
-<button *ngIf="userData" (click)="logOut()" class="btn btn-success">Exit</button>
+<div class="row justify-content-center">
+
+  <div class="row bg-dark col-12 col-md-6 m-0 text-center justify-content-center">
+    <h2 class="col-12 text-light">To view this site you need to log in</h2>
+
+    <div class="col-auto mt-4">
+      <h2 *ngIf="resultMessage" class="bg-danger text-light">{{resultMessage}}</h2>
+      <button class="btn btn-light rounded-0" (click)="logInWithGoogle()">
+        <img src="https://img.icons8.com/plasticine/100/000000/google-logo.png" class="w-25"/>
+        <span>Sign up with Google</span>
+      </button>
+    </div>
+  </div>
+
+</div>

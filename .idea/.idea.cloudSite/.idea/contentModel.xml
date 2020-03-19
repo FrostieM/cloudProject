@@ -16,6 +16,33 @@
           <e p=".gitignore" t="Include" />
           <e p="angular.json" t="Include" />
           <e p="browserslist" t="Include" />
+          <e p="dist" t="Include">
+            <e p="assets" t="Include">
+              <e p="computer.svg" t="Include" />
+              <e p="icon.png" t="Include" />
+              <e p="menu.png" t="Include" />
+              <e p="monitor.svg" t="Include" />
+            </e>
+            <e p="index.html" t="Include" />
+            <e p="main-es2015.js" t="Include" />
+            <e p="main-es2015.js.map" t="Include" />
+            <e p="main-es5.js" t="Include" />
+            <e p="main-es5.js.map" t="Include" />
+            <e p="polyfills-es2015.js" t="Include" />
+            <e p="polyfills-es2015.js.map" t="Include" />
+            <e p="polyfills-es5.js" t="Include" />
+            <e p="polyfills-es5.js.map" t="Include" />
+            <e p="runtime-es2015.js" t="Include" />
+            <e p="runtime-es2015.js.map" t="Include" />
+            <e p="runtime-es5.js" t="Include" />
+            <e p="runtime-es5.js.map" t="Include" />
+            <e p="styles.css" t="Include" />
+            <e p="styles.css.map" t="Include" />
+            <e p="vendor-es2015.js" t="Include" />
+            <e p="vendor-es2015.js.map" t="Include" />
+            <e p="vendor-es5.js" t="Include" />
+            <e p="vendor-es5.js.map" t="Include" />
+          </e>
           <e p="e2e" t="Include">
             <e p="protractor.conf.js" t="Include" />
             <e p="src" t="Include">
@@ -42,6 +69,7 @@
           <e p="node_modules\@angular-devkit\build-webpack" t="IncludeRecursive" />
           <e p="node_modules\@angular-devkit\core" t="IncludeRecursive" />
           <e p="node_modules\@angular-devkit\schematics" t="IncludeRecursive" />
+          <e p="node_modules\@icon\open-iconic" t="IncludeRecursive" />
           <e p="node_modules\@ngtools\webpack" t="IncludeRecursive" />
           <e p="node_modules\@nguniversal\module-map-ngfactory-loader" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
@@ -66,7 +94,6 @@
           <e p="node_modules\coverage-istanbul-loader" t="IncludeRecursive" />
           <e p="node_modules\dependency-graph" t="IncludeRecursive" />
           <e p="node_modules\domino" t="IncludeRecursive" />
-          <e p="node_modules\es6-promise" t="IncludeRecursive" />
           <e p="node_modules\fast-deep-equal" t="IncludeRecursive" />
           <e p="node_modules\jasmine-core" t="IncludeRecursive" />
           <e p="node_modules\jasmine-spec-reporter" t="IncludeRecursive" />
@@ -81,6 +108,7 @@
           <e p="node_modules\magic-string" t="IncludeRecursive" />
           <e p="node_modules\node-sass" t="IncludeRecursive" />
           <e p="node_modules\oidc-client" t="IncludeRecursive" />
+          <e p="node_modules\open-iconic" t="IncludeRecursive" />
           <e p="node_modules\popper.js" t="IncludeRecursive" />
           <e p="node_modules\portfinder" t="IncludeRecursive" />
           <e p="node_modules\postcss" t="IncludeRecursive" />
@@ -118,6 +146,7 @@
           <e p="node_modules\typescript\lib\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
           <e p="node_modules\typescript\lib\lib.es2017.string.d.ts" t="IncludeRecursive" />
           <e p="node_modules\typescript\lib\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+          <e p="node_modules\typescript\lib\lib.es2018.asyncgenerator.d.ts" t="IncludeRecursive" />
           <e p="node_modules\typescript\lib\lib.es2018.asynciterable.d.ts" t="IncludeRecursive" />
           <e p="node_modules\typescript\lib\lib.es2018.d.ts" t="IncludeRecursive" />
           <e p="node_modules\typescript\lib\lib.es2018.full.d.ts" t="IncludeRecursive" />
@@ -166,12 +195,25 @@
                 <e p="auth.component.html" t="Include" />
                 <e p="auth.component.ts" t="Include" />
               </e>
+              <e p="computerList" t="Include">
+                <e p="computerList.component.css" t="Include" />
+                <e p="computerList.component.html" t="Include" />
+                <e p="computerList.component.ts" t="Include" />
+              </e>
               <e p="home" t="Include">
                 <e p="home.component.css" t="Include" />
                 <e p="home.component.html" t="Include" />
                 <e p="home.component.ts" t="Include" />
               </e>
+              <e p="programList" t="Include">
+                <e p="programList.component.css" t="Include" />
+                <e p="programList.component.html" t="Include" />
+                <e p="programList.component.ts" t="Include" />
+              </e>
               <e p="shared" t="Include">
+                <e p="guards" t="Include">
+                  <e p="auth.guard.ts" t="Include" />
+                </e>
                 <e p="interfaces" t="Include">
                   <e p="application.interface.ts" t="Include" />
                   <e p="computer.interface.ts" t="Include" />

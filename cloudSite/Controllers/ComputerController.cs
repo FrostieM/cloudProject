@@ -11,12 +11,21 @@ namespace cloudSite.Controllers
     {
 
         private readonly SpreadsheetReader _reader = new SpreadsheetReader();
-        private readonly int _pageSize = 10;
-        
+        private int _maxPageSize = 10;
+
         [HttpGet]
         public IEnumerable GetComputers()
         {
             return _reader.GetComputers();
+        }
+        
+        [Route("getCompsByProgram")]
+        [HttpGet]
+        public IEnumerable GetComputersByProgram(string programName)
+        {
+            return _reader.GetComputers()
+                .Where(comp 
+                    => comp.Apps.Any(app => app.Name.ToLower().Contains(programName.ToLower())));
         }
 
         [Route("computerInfo")]
@@ -30,13 +39,13 @@ namespace cloudSite.Controllers
                 {
                     Date = computerInfo.Date,
                     Name = computerInfo.Name,
-                    Apps = computerInfo.Apps.Skip(_pageSize * (page - 1)).Take(_pageSize).ToList()
+                    Apps = computerInfo.Apps.Skip(_maxPageSize * (page - 1)).Take(_maxPageSize)
                 },
                 Pagination = new PaginationViewData
                 {
-                    TotalItems = computerInfo.Apps.Count(),
                     CurrentPage = page,
-                    PageSize = _pageSize
+                    PageSize = _maxPageSize,
+                    TotalItems = computerInfo.Apps.Count()
                 }
             };
         }

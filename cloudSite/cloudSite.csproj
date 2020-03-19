@@ -34,7 +34,10 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
         <None Include="ClientApp\src\app\app.component.css" />
         <None Include="ClientApp\src\app\auth\home.component.css" />
+        <None Include="ClientApp\src\app\computerList\home.component.css" />
         <None Include="ClientApp\src\app\home\home.component.css" />
+        <None Include="ClientApp\src\app\programList\home.component.css" />
+        <None Include="ClientApp\src\app\shared\guards\auth.guard.ts" />
         <None Include="ClientApp\src\app\shared\interfaces\application.interface.ts" />
         <None Include="ClientApp\src\app\shared\interfaces\computer.interface.ts" />
         <None Include="ClientApp\src\app\shared\interfaces\computerInfo.interface.ts" />
@@ -66,7 +69,7 @@
     <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
         <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build --prod" />
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
         <!-- Include the newly-built files in the publish output -->

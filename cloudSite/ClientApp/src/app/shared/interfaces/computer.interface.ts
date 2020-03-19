@@ -1,4 +1,5 @@
 ﻿export interface IComputer {
   name: string;
-  appsNum: number
+  appsNum: number;
+  date: Date;
 }

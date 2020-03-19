@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ComputerService} from "../shared/services/computer.service";
 import {AuthService, GoogleLoginProvider} from "angularx-social-login";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -8,10 +8,9 @@ import {AuthService, GoogleLoginProvider} from "angularx-social-login";
   styleUrls: ['auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  public userData: any;
   public resultMessage: string;
 
-  constructor( private authService: AuthService ) { }
+  constructor(private _authService: AuthService, private _route: Router ) { }
 
   ngOnInit() {
 
@@ -20,12 +19,12 @@ export class AuthComponent implements OnInit {
   logInWithGoogle(): void {
     let platform = GoogleLoginProvider.PROVIDER_ID;
 
-    this.authService.signIn(platform).then(
+    this._authService.signIn(platform).then(
       response => {
 
         console.log(platform + ' logged in user data is= ' , response);
 
-        this.userData = {
+        let userData = {
           UserId: response.id,
           Provider: response.provider,
           FirstName: response.firstName,
@@ -33,17 +32,14 @@ export class AuthComponent implements OnInit {
           EmailAddress: response.email,
           PictureUrl: response.photoUrl
         };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+        this._route.navigate([""]).then();
       },
       error => {
         console.log(error);
         this.resultMessage = error;
       })
-  }
-
-  public logOut(): void {
-    this.authService.signOut().then();
-    this.userData = null;
-    console.log('User has signed our');
   }
 
 }

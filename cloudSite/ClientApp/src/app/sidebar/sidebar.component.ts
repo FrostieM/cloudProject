@@ -1,32 +1,27 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {IComputer} from "../shared/interfaces/computer.interface";
+import {Component, NgZone} from '@angular/core';
 import {ComputerService} from "../shared/services/computer.service";
+import {AuthService} from "angularx-social-login";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent {
 
-  public menuActive: boolean = true;
+  private _user: any;
 
-  public computers: IComputer[];
-  @Output() messageToShowComputerInfo = new EventEmitter<string>();
-
-  private currentComputer: IComputer;
-  constructor(private computerService: ComputerService) {
+  constructor(private _authService: AuthService, private _router: Router) {
+    this._user = JSON.parse(localStorage.getItem("user"));
   }
 
-  ngOnInit(): void {
-    this.computerService.getComputers().subscribe(request => {
-      this.computers = request;
-    });
+  public logOut(): void {
+    this._authService.signOut().then();
+    localStorage.removeItem("user");
+    this._router.navigate(["auth"]).then();
   }
 
-  public selectComputer(computer: IComputer){
-    this.currentComputer = computer;
-    this.messageToShowComputerInfo.emit(computer.name);
-  }
+
 
 }

@@ -12,6 +12,9 @@ import {ComputerService} from "./shared/services/computer.service";
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import {AuthComponent} from "./auth/auth.component";
+import {ComputerListComponent} from "./computerList/computerList.component";
+import {ProgramListComponent} from "./programList/programList.component";
+import {AuthGuard} from "./shared/guards/auth.guard";
 
 let config = new AuthServiceConfig([
   {
@@ -30,6 +33,8 @@ export function provideConfig()
     AppComponent,
     HomeComponent,
     SidebarComponent,
+    ComputerListComponent,
+    ProgramListComponent,
     AuthComponent
   ],
   imports: [
@@ -38,13 +43,13 @@ export function provideConfig()
     FormsModule,
     SocialLoginModule.initialize(config),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full'},
-      { path: 'auth', component: AuthComponent}
+      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'auth', component: AuthComponent},
+      { path: 'programList/:compName', component: ProgramListComponent, canActivate: [AuthGuard]},
     ])
   ],
   providers: [
-    ComputerService,
-
+    ComputerService, AuthGuard
   ],
   bootstrap: [AppComponent]
 })

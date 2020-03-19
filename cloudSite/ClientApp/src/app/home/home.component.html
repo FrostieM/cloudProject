@@ -1,48 +1,8 @@
-<div class="wrapper" id="wrapper">
+<div class="app">
 
-  <app-sidebar (messageToShowComputerInfo)="Computer = $event"></app-sidebar>
+  <app-sidebar></app-sidebar>
 
-  <div *ngIf="Computer" class="Information" id="Information">
+  <app-computer-list></app-computer-list>
 
-    <div class="header">
-      Computer: {{Computer}}, Last Update: {{computerViewData?.computerInfo.date|date}}
-    </div>
-
-    <div class="programs">
-      <div *ngFor="let app of computerViewData?.computerInfo.apps" class="prog">
-        <span>{{app.name}}</span>
-        <span *ngIf="app.version">, version: {{app.version}}</span>
-      </div>
-    </div>
-
-    <div *ngIf="computerViewData"  class="next">
-
-      <div class="Num">
-        <button class="btn text-white"
-                [disabled]="computerViewData?.pagination.currentPage == 1"
-                (click)="getComputerInfo(_computer, computerViewData.pagination.currentPage - 1)">
-          Previous
-        </button>
-      </div>
-
-      <div *ngFor="let page of getPages()" class="Num">
-        <button class="btn text-white"
-                [disabled]="computerViewData?.pagination.currentPage == page"
-                (click)="getComputerInfo(_computer, page)">
-          {{page}}
-        </button>
-      </div>
-
-      <div class="Num">
-        <button class="btn text-white"
-                [disabled]="computerViewData?.pagination.currentPage == computerViewData?.pagination.pages"
-                (click)="getComputerInfo(_computer, computerViewData.pagination.currentPage+1)">
-          Next
-        </button>
-      </div>
-
-    </div>
-
-  </div>
 
 </div>

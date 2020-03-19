@@ -14,6 +14,11 @@ export class ComputerService{
     return this.getRequest<IComputer[]>(this.baseUrl + "api/computer");
   }
 
+  public getComputersByProgram(program: string): Observable<IComputer[]>{
+    let params = new HttpParams().set("programName", program);
+    return this.getRequest<IComputer[]>(this.baseUrl + "api/computer/getCompsByProgram", params);
+  }
+
   public getComputerInfo(computerName: string, page: number): Observable<IComputerViewData>{
     let params = new HttpParams().set("computerName", computerName).set("page", page.toString());
     return this.getRequest<IComputerViewData>(this.baseUrl + "api/computer/computerInfo", params);

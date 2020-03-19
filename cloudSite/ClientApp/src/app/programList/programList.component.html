@@ -1,0 +1,63 @@
+<app-sidebar></app-sidebar>
+
+<a [href]="'/'" class="btn btn-outline-dark rounded-0 sticky-top">
+  <span class="oi oi-arrow-thick-left"></span>
+</a>
+
+<div>
+  <table *ngIf="_computerViewData" class="col-8 offset-2 table table-striped table-active text-center">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Version</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let program of _computerViewData.computerInfo.apps; let i = index" class="text-center">
+      <td>{{(i + 1) + (10 * (_computerViewData.pagination.currentPage - 1))}}</td>
+      <td>{{program.name}}</td>
+      <td>{{program.version ? program.version : '-'}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation">
+    <div class="pagination justify-content-center mt-5">
+      <button class="btn btn-dark rounded-0"
+              [disabled]="_computerViewData.pagination.currentPage == 1"
+              (click)="getComputerInfo(_computerViewData.computerInfo.name, _computerViewData.pagination.currentPage - 1)">
+        Previous
+      </button>
+
+      <button class="btn btn-outline-dark rounded-0"
+              [disabled]="_computerViewData.pagination.currentPage == 1"
+              (click)="getComputerInfo(_computerViewData.computerInfo.name, 1)">
+        1
+      </button>
+
+      <span *ngIf="_computerViewData.pagination.currentPage >= 6">...</span>
+
+      <button *ngFor="let page of getNumberRange()"
+              class="btn btn-outline-dark rounded-0"
+              [disabled]="page == _computerViewData.pagination.currentPage"
+              (click)="getComputerInfo(_computerViewData.computerInfo.name, page)">{{page}}</button>
+
+      <span *ngIf="_computerViewData.pagination.currentPage <= _computerViewData.pagination.pages - 4">...</span>
+
+      <button class="btn btn-outline-dark rounded-0"
+              [disabled]="_computerViewData.pagination.currentPage == _computerViewData.pagination.pages"
+              (click)="getComputerInfo(_computerViewData.computerInfo.name, _computerViewData.pagination.pages)">
+        {{_computerViewData.pagination.pages}}
+      </button>
+
+      <button class="btn btn-dark rounded-0"
+              [disabled]="_computerViewData.pagination.currentPage == _computerViewData.pagination.pages"
+              (click)="getComputerInfo(_computerViewData.computerInfo.name, _computerViewData.pagination.currentPage + 1)">
+        Next
+      </button>
+    </div>
+  </nav>
+</div>
+
+

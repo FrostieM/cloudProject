@@ -20,7 +20,7 @@ namespace GoogleSheetLib
 
     public class SpreadsheetReader
     {
-        private readonly AccessProvider accessProvider = new AccessProvider(AccessType.ApiKey);
+        private readonly AccessProvider accessProvider = new AccessProvider(AccessType.ServiceAccount);
 
         public ComputerInfo GetComputer(string computerName)
         {
