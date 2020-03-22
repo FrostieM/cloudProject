@@ -1,11 +1,14 @@
 <app-sidebar></app-sidebar>
 
-<a [href]="'/'" class="btn btn-outline-dark rounded-0 sticky-top">
-  <span class="oi oi-arrow-thick-left"></span>
-</a>
+<div class="sticky-top mt-5 position-fixed d-none d-md-block">
+  <a [href]="'/'" class="btn btn-outline-dark rounded-0">
+    <span class="oi oi-arrow-thick-left"></span>
+  </a>
+</div>
 
-<div>
-  <table *ngIf="_computerViewData" class="col-8 offset-2 table table-striped table-active text-center">
+
+<div class="mt-0 mt-md-1">
+  <table *ngIf="_computerViewData" class="col-12 col-md-8 offset-md-2 table table-striped table-active text-center">
     <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -22,7 +25,7 @@
     </tbody>
   </table>
 
-  <nav aria-label="Page navigation">
+  <nav *ngIf="_computerViewData.pagination.pages > 1" aria-label="Page navigation">
     <div class="pagination justify-content-center mt-5">
       <button class="btn btn-dark rounded-0"
               [disabled]="_computerViewData.pagination.currentPage == 1"

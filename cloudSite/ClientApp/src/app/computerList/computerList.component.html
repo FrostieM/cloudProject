@@ -5,19 +5,19 @@
     <input id="search" aria-label="Search" class="form-control mt-2 ml-1 mr-4 border-left-0 border-right-0 border-top-0" placeholder="Search" type="text">
   </div>
 
-  <div *ngFor="let computer of computers" class="mt-5 col-10 col-md-5 offset-1 card p-0 rounded"
+  <div *ngFor="let computer of computers" class="mt-5 col-12 col-md-5 col-xl-auto card p-0 rounded"
        (click)="redirectToComputerInfo(computer.name)">
     <div class="card-body row">
 
-      <div class="col col-lg-3 p-0 d-none d-lg-inline-block">
+      <div class="col col-lg-3 col-xl-auto p-0 d-none d-md-inline-block d-xl-none align-self-center">
         <img src="assets/computer.svg" alt="" class="img-fluid">
       </div>
 
-      <h2 class="col-9 col-lg-6 m-0 p-0 pl-2 text-center align-self-center">
+      <h2 class="col-9 col-lg-6 col-xl-auto m-0 ml-auto p-0 pl-2 text-center align-self-center">
         {{computer.name}}
       </h2>
 
-      <div class="col-3 m-0 pl-2 p-0 align-self-center text-center">
+      <div class="col-3 col-xl-auto m-0 ml-auto pl-2 p-0 align-self-center text-center">
         <h1><span class="badge badge-light text-dark">{{computer.appsNum}}</span></h1>
       </div>
 

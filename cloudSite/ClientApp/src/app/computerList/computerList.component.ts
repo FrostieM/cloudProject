@@ -28,7 +28,7 @@ export class ComputerListComponent implements OnInit{
       clearTimeout(timeout);
       timeout = setTimeout(function () {
         $this.getCompsByProgram((input as HTMLInputElement).value);
-      }, 1000);
+      }, 300);
     });
   }
 

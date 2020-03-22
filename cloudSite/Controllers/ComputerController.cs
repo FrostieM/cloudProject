@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using cloudSite.ViewData;
 using GoogleSheetLib;
@@ -9,21 +11,44 @@ namespace cloudSite.Controllers
     [Route("api/[controller]")]
     public class ComputerController : ControllerBase
     {
-
-        private readonly SpreadsheetReader _reader = new SpreadsheetReader();
+        
+        private static readonly SpreadsheetReader Reader = new SpreadsheetReader();
+        private static readonly ComputerAccess Computer = new ComputerAccess();
+        
         private int _maxPageSize = 10;
+        
 
+        class ComputerAccess
+        {
+            private List<ComputerInfo> Computers { get; set; } = new List<ComputerInfo>();
+            private DateTime? Date { get; set; }
+            
+            public IEnumerable<ComputerInfo> GetComputers(SpreadsheetReader reader)
+            {
+                var now = DateTime.Now;
+                if (Date != null && Date.Value.AddMinutes(2) >= now) return Computers;
+                
+                Computers.Clear();
+                Date = now;
+                Computers = reader.GetComputers().ToList();
+
+                return Computers;
+            }
+        }
+        
         [HttpGet]
         public IEnumerable GetComputers()
         {
-            return _reader.GetComputers();
+            return Computer.GetComputers(Reader);
         }
         
         [Route("getCompsByProgram")]
         [HttpGet]
         public IEnumerable GetComputersByProgram(string programName)
         {
-            return _reader.GetComputers()
+            if (programName == null) return Computer.GetComputers(Reader);
+            
+            return Computer.GetComputers(Reader)
                 .Where(comp 
                     => comp.Apps.Any(app => app.Name.ToLower().Contains(programName.ToLower())));
         }
@@ -32,7 +57,9 @@ namespace cloudSite.Controllers
         [HttpGet]
         public ComputerViewData GetComputerInfo(string computerName, int page = 1)
         {
-            var computerInfo = _reader.GetComputer(computerName);
+            var computerInfo = Computer.GetComputers(Reader)
+                .Single(comp => comp.Name == computerName);
+            
             return new ComputerViewData
             {
                 ComputerInfo = new ComputerInfo
