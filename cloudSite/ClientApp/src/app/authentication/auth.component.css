@@ -1,0 +1,9 @@
+﻿.active{
+  border-bottom: 2px solid white;
+}
+
+button:focus {
+  outline:none;
+  box-shadow: none;
+}
+

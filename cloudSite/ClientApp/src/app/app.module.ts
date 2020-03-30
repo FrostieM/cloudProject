@@ -11,10 +11,14 @@ import {ComputerService} from "./shared/services/computer.service";
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import {AuthComponent} from "./auth/auth.component";
 import {ComputerListComponent} from "./computerList/computerList.component";
 import {ProgramListComponent} from "./programList/programList.component";
 import {AuthGuard} from "./shared/guards/auth.guard";
+import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
+import {TokenService} from "./shared/services/token.service";
+import {AuthModule} from "./authentication/auth.module";
+import {UserLogInfoComponent} from "./userLogInfo/userLogInfo.component";
+import {UserLogInfoService} from "./shared/services/user-log-info.service";
 
 let config = new AuthServiceConfig([
   {
@@ -27,7 +31,6 @@ export function provideConfig()
   return config;
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,22 +38,34 @@ export function provideConfig()
     SidebarComponent,
     ComputerListComponent,
     ProgramListComponent,
-    AuthComponent
+    UserLogInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     SocialLoginModule.initialize(config),
+    AuthModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-      { path: 'auth', component: AuthComponent},
       { path: 'programList/:compName', component: ProgramListComponent, canActivate: [AuthGuard]},
-    ])
+      { path: 'Log', component: UserLogInfoComponent, canActivate: [AuthGuard]},
+    ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:5001"],
+        blacklistedRoutes: []
+      }
+    })
   ],
   providers: [
-    ComputerService, AuthGuard
+    ComputerService, AuthGuard, JwtHelperService, UserLogInfoService,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function tokenGetter() {
+  return new TokenService().Token;
+}

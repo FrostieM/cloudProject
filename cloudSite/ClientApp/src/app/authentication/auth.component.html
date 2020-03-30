@@ -1,0 +1,28 @@
+<div class="row m-0 align-content-center justify-content-center">
+  <div class="row col-sm-8 col-md-6 col-lg-4 m-0 p-0 text-center bg-dark shadow-lg rounded-bottom">
+
+    <div class="col-12 text-center">
+      <img src="https://img.icons8.com/clouds/100/000000/cloud.png" alt="cloud"/>
+    </div>
+
+    <div class="col-12">
+      <button class="col-6 pb-3 btn text-center text-light rounded-0"
+              [ngClass]="isLoginForm==true ? 'active' : 'none' "
+              (click)="isLoginForm = true"
+              [routerLink]="['/auth']">
+        <span>Login</span>
+      </button>
+      <button class="col-6 pb-3 btn text-center text-light rounded-0"
+              [ngClass]="isLoginForm==false ? 'active' : 'none' "
+              (click)="isLoginForm=false"
+              [routerLink]="['signUp']">
+        <span>Registration</span>
+      </button>
+    </div>
+
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>
+

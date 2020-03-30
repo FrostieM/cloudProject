@@ -1,20 +1,20 @@
 ﻿import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
+import {TokenService} from "../services/token.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable()
-export class AuthGuard implements CanActivate{
-  constructor(private _route: Router) {
-  }
+export class AuthGuard implements CanActivate {
+  constructor(private jwtHelper: JwtHelperService,
+              private router: Router,
+              private tokenService: TokenService) {}
 
-  canActivate(): boolean {
-    let user = localStorage.getItem("user");
-
-    if (user == null){
-      this._route.navigate(['auth']).then();
-      return false;
+  canActivate() {
+    if (this.tokenService.IsTokenCorrect){
+      return true;
     }
 
-    return true;
+    this.router.navigate(["auth"]).then(() => {});
+    return false;
   }
-
 }

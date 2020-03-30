@@ -1,0 +1,72 @@
+﻿<form class="col" [formGroup]="signUpForm" (ngSubmit)="registration()" (change)="invalidSignUp=false">
+  <div *ngIf="invalidSignUp || invalidForm(signUpForm)" class="mt-1">
+    <div *ngIf="invalidSignUp"
+         class="p-0 mt-1 alert alert-warning">
+      <p>Cannot sign up, user already exist</p>
+    </div>
+
+    <div *ngIf="signUpForm.controls['email'].errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.controls['email'].errors?.required">Email is required</p>
+      <p *ngIf="signUpForm.controls['email'].errors?.email">Wrong e-mail</p>
+    </div>
+
+    <div *ngIf="signUpForm.controls['password'].errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.controls['password'].errors?.required">Password is required</p>
+      <p *ngIf="signUpForm.controls['password'].errors?.minlength">Password is too small</p>
+      <p *ngIf="signUpForm.controls['password'].errors?.maxlength">Password is too big</p>
+    </div>
+
+    <div *ngIf="signUpForm.controls['rePassword'].errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.controls['rePassword'].errors?.required">Repeat password</p>
+    </div>
+
+    <div *ngIf="signUpForm.controls['firstname'].errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.controls['firstname'].errors?.required">First name is required</p>
+    </div>
+
+    <div *ngIf="signUpForm.controls['surname'].errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.controls['surname'].errors?.required">Last name is required</p>
+    </div>
+
+    <div *ngIf="signUpForm.errors"
+         class="p-0 mt-1 alert alert-warning">
+      <p *ngIf="signUpForm.errors?.notSame">Passwords not equel</p>
+    </div>
+  </div>
+
+
+  <p>
+    <label for="email" class="sr-only">email</label>
+    <input type="text" id="email" name="email" formControlName="email" class="col-8 mt-2" placeholder="email" >
+  </p>
+
+  <p>
+    <label for="password" class="sr-only">password</label>
+    <input type="password" id="password" name="password" formControlName="password" class="col-8 mt-2" placeholder="password">
+  </p>
+
+  <p>
+    <label for="rePassword" class="sr-only">repeat password</label>
+    <input type="password" id="rePassword" name="rePassword" formControlName="rePassword" class="col-8 mt-2" placeholder="repeat password">
+  </p>
+
+  <p>
+    <label for="firstname" class="sr-only">first name</label>
+    <input type="text" id="firstname" name="firstname" formControlName="firstname" class="col-8 mt-2" placeholder="first name">
+  </p>
+
+  <p>
+    <label for="surname" class="sr-only">last name</label>
+    <input type="text" id="surname" name="surname" formControlName="surname" class="col-8 mt-2" placeholder="last name">
+  </p>
+
+  <div class="row ml-1 col-auto justify-content-center">
+    <input type="submit" value="submit" [disabled]="signUpForm.invalid" class="col-auto btn btn-outline-light rounded-0">
+  </div>
+
+</form>

@@ -1,8 +1,9 @@
 <div class="sidebar sticky-top">
   <div class="row m-0 p-0">
     <a class="col-auto text-light text-decoration-none align-self-center" href=""><span class="oi oi-cloud"></span><span class="ml-2">Cloud Site</span></a>
-    <div class="col-auto ml-auto p-0">
-      <span class="text-light mr-4">Hello, {{_user?.FirstName}}</span>
+    <button (click)="_router.navigate(['/Log'])" class="btn btn-outline-light rounded-0">Check Log</button>
+    <div *ngIf="user" class="col-auto ml-auto p-0">
+      <span class="text-light mr-4">Hello, {{user}}</span>
       <button (click)="logOut()" class="btn btn-outline-light rounded-0">Exit</button>
     </div>
   </div>

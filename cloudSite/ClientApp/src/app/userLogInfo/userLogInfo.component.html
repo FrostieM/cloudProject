@@ -1,0 +1,20 @@
+<app-sidebar></app-sidebar>
+
+<div class="mt-0 mt-md-1">
+  <table *ngIf="usersLogInfo" class="col-12 col-md-8 offset-md-2 table table-striped table-active text-center">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of usersLogInfo; let i = index" class="text-center">
+      <td>{{i + 1}}</td>
+      <td>{{user.firstname}} {{user.surname}}</td>
+      <td>{{user.date | date:'yyyy/MM/dd, HH:mm:ss'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

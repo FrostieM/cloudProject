@@ -42,8 +42,7 @@ namespace cloudSite.Controllers
             return Computer.GetComputers(Reader);
         }
         
-        [Route("getCompsByProgram")]
-        [HttpGet]
+        [HttpGet, Route("getCompsByProgram")]
         public IEnumerable GetComputersByProgram(string programName)
         {
             if (programName == null) return Computer.GetComputers(Reader);
@@ -52,9 +51,8 @@ namespace cloudSite.Controllers
                 .Where(comp 
                     => comp.Apps.Any(app => app.Name.ToLower().Contains(programName.ToLower())));
         }
-
-        [Route("computerInfo")]
-        [HttpGet]
+        
+        [HttpGet, Route("computerInfo")]
         public ComputerViewData GetComputerInfo(string computerName, int page = 1)
         {
             var computerInfo = Computer.GetComputers(Reader)

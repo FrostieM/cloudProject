@@ -69,6 +69,7 @@
           <e p="node_modules\@angular-devkit\build-webpack" t="IncludeRecursive" />
           <e p="node_modules\@angular-devkit\core" t="IncludeRecursive" />
           <e p="node_modules\@angular-devkit\schematics" t="IncludeRecursive" />
+          <e p="node_modules\@auth0\angular-jwt" t="IncludeRecursive" />
           <e p="node_modules\@icon\open-iconic" t="IncludeRecursive" />
           <e p="node_modules\@ngtools\webpack" t="IncludeRecursive" />
           <e p="node_modules\@nguniversal\module-map-ngfactory-loader" t="IncludeRecursive" />
@@ -190,10 +191,24 @@
               <e p="app.component.ts" t="Include" />
               <e p="app.module.ts" t="Include" />
               <e p="app.server.module.ts" t="Include" />
-              <e p="auth" t="Include">
+              <e p="authentication" t="Include">
                 <e p="auth.component.css" t="Include" />
                 <e p="auth.component.html" t="Include" />
                 <e p="auth.component.ts" t="Include" />
+                <e p="auth.module.ts" t="Include" />
+                <e p="login" t="Include">
+                  <e p="login.component.html" t="Include" />
+                  <e p="login.component.ts" t="Include" />
+                </e>
+                <e p="registration" t="Include">
+                  <e p="registration.component.html" t="Include" />
+                  <e p="registration.component.ts" t="Include" />
+                </e>
+                <e p="shared" t="Include">
+                  <e p="guards" t="Include">
+                    <e p="role.guard.ts" t="Include" />
+                  </e>
+                </e>
               </e>
               <e p="computerList" t="Include">
                 <e p="computerList.component.css" t="Include" />
@@ -211,6 +226,9 @@
                 <e p="programList.component.ts" t="Include" />
               </e>
               <e p="shared" t="Include">
+                <e p="abstract" t="Include">
+                  <e p="httpConnection.abstract.ts" t="Include" />
+                </e>
                 <e p="guards" t="Include">
                   <e p="auth.guard.ts" t="Include" />
                 </e>
@@ -220,15 +238,25 @@
                   <e p="computerInfo.interface.ts" t="Include" />
                   <e p="computerViewData.interface.ts" t="Include" />
                   <e p="pagination.interface.ts" t="Include" />
+                  <e p="user.interface.ts" t="Include" />
+                  <e p="userLogInfo.interface.ts" t="Include" />
                 </e>
                 <e p="services" t="Include">
+                  <e p="auth-user.service.ts" t="Include" />
                   <e p="computer.service.ts" t="Include" />
+                  <e p="token.service.ts" t="Include" />
+                  <e p="user-log-info.service.ts" t="Include" />
                 </e>
               </e>
               <e p="sidebar" t="Include">
                 <e p="sidebar.component.css" t="Include" />
                 <e p="sidebar.component.html" t="Include" />
                 <e p="sidebar.component.ts" t="Include" />
+              </e>
+              <e p="userLogInfo" t="Include">
+                <e p="UserLogInfo.component.css" t="Include" />
+                <e p="userLogInfo.component.html" t="Include" />
+                <e p="userLogInfo.component.ts" t="Include" />
               </e>
             </e>
             <e p="assets" t="Include">
@@ -263,13 +291,31 @@
           <e p="spreadsheet_config.json" t="Include" />
         </e>
         <e p="Controllers" t="Include">
+          <e p="AuthController.cs" t="Include" />
           <e p="ComputerController.cs" t="Include" />
+          <e p="UserInfo.cs" t="Include" />
+        </e>
+        <e p="forms" t="Include">
+          <e p="UserForm.cs" t="Include" />
         </e>
         <e p="GoogleSheetLib" t="Include">
           <e p="client_secret.json" t="Include" />
           <e p="GoogleSheetLib.csproj" t="Include" />
           <e p="service_account_secret.json" t="Include" />
           <e p="spreadsheet_config.json" t="Include" />
+        </e>
+        <e p="Helpers" t="Include">
+          <e p="AuthOptions.cs" t="Include" />
+        </e>
+        <e p="Migrations" t="Include">
+          <e p="20200327140903_Initial.cs" t="Include" />
+          <e p="20200327140903_Initial.Designer.cs" t="Include" />
+          <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="Model" t="Include">
+          <e p="ApplicationDbContext.cs" t="Include" />
+          <e p="LoggerUserInfo.cs" t="Include" />
+          <e p="User.cs" t="Include" />
         </e>
         <e p="MoreLinq" t="Include">
           <e p="MoreEnumerable.MinBy.cs" t="Include" />
@@ -293,6 +339,7 @@
         <e p="ViewData" t="Include">
           <e p="ComputerViewData.cs" t="Include" />
           <e p="PaginationViewData.cs" t="Include" />
+          <e p="UserLogInfoViewData.cs" t="Include" />
         </e>
         <e p="wwwroot" t="Include">
           <e p="favicon.ico" t="Include" />
