@@ -6,5 +6,10 @@
   <FilterNames>
     <string>Microsoft Visual C++</string>
     <string>Microsoft .NET</string>
+    <string>Security Update for</string>
+    <string>Update for</string>
+    <string>Universal CRT</string>
+    <string>WinRT</string>
+    <string>Windows</string>
   </FilterNames>
 </Config>

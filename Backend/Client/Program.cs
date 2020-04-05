@@ -27,12 +27,10 @@ namespace Client
         private static void Main()
         {
             LoadConfig();
-            var apps = GetAppsList();
-            var diff = GetDifference(apps);
-            var container = new AppsContainer {apps = diff, hostname = Dns.GetHostName()};
-            var data = container.GetBytes();
-            Network.TcpSend(data, _config.ServerIP, _config.ServerPort);
-            SaveToCache(container);
+            var resultList = SetAppsStatuses(GetAppsFromRegistry());
+            var container = new AppsContainer {apps = resultList, hostname = Dns.GetHostName()};
+            Network.TcpSend(container.GetBytes(), _config.ServerIP, _config.ServerPort);
+            SaveContainerToDisk(container);
         }
 
         private static void LoadConfig()
@@ -50,22 +48,27 @@ namespace Client
             }
         }
 
-        private static List<App> GetAppsList()
+        private static List<App> GetAppsFromRegistry()
         {
             var softPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+
             var regArr = new List<RegistryKey>();
-            regArr.Add(GetKeyFromHive(RegistryHive.LocalMachine, softPath));
-            regArr.Add(GetKeyFromHive(RegistryHive.CurrentUser, softPath));
-            foreach (var user in RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry64).GetSubKeyNames())
-                regArr.Add(GetKeyFromHive(RegistryHive.Users, $@"{user}\{softPath}"));
+            regArr.Add(GetRegistryBranch(RegistryHive.LocalMachine).OpenSubKey(softPath));
+            regArr.Add(GetRegistryBranch(RegistryHive.CurrentUser).OpenSubKey(softPath));
+            foreach (var user in GetRegistryBranch(RegistryHive.Users).GetSubKeyNames())
+                regArr.Add(GetRegistryBranch(RegistryHive.Users).OpenSubKey($@"{user}\{softPath}"));
+
             var apps = new List<App>();
-            foreach (var key in regArr) apps.AddRange(GetAppsFromBranch(key));
+            foreach (var branch in regArr) apps.AddRange(GetAppsFromBranch(branch));
             apps = apps.Distinct().OrderBy(app => app.name).ToList();
             return apps;
         }
 
-        private static RegistryKey GetKeyFromHive(RegistryHive hive, string path) =>
-            RegistryKey.OpenBaseKey(hive, RegistryView.Registry64).OpenSubKey(path);
+        private static RegistryKey GetRegistryBranch(RegistryHive hive)
+        {
+            var regView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+            return RegistryKey.OpenBaseKey(hive, regView);
+        }
 
         private static List<App> GetAppsFromBranch(RegistryKey mainKey)
         {
@@ -83,7 +86,7 @@ namespace Client
             return apps;
         }
 
-        private static List<App> GetDifference(List<App> apps)
+        private static List<App> SetAppsStatuses(List<App> apps)
         {
             var result = new List<App>();
             if (!File.Exists(_config.CacheFileName)) return apps;
@@ -99,13 +102,12 @@ namespace Client
                 }
                 result.Add(app);
             }
-
             cachedApps.ForEach(app => app.status = AppStatus.Deleted);
             result.AddRange(cachedApps);
             return result;
         }
 
-        private static void SaveToCache(AppsContainer container)
+        private static void SaveContainerToDisk(AppsContainer container)
         {
             var formatter = new BinaryFormatter();
             using (var fs = new FileStream(_config.CacheFileName, FileMode.OpenOrCreate))

@@ -33,8 +33,7 @@ namespace ClassLib
             catch (Exception ex){Console.WriteLine(ex.Message);}
             finally{listener?.Stop();}
         }
-
-        private static TcpClient GetConnectionClient(string ip, int port)
+        private static TcpClient GetTcpConnection(string ip, int port)
         {
             TcpClient client = null;
             do
@@ -53,17 +52,9 @@ namespace ClassLib
         }
         public static void TcpSend(byte[] data, string ip, int port)
         {
-            using (var client = GetConnectionClient(ip, port))
+            using (var client = GetTcpConnection(ip, port))
                 using (var stream = client.GetStream())
                     stream.Write(data, 0, data.Length);
-        }
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    return ip.ToString();
-            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
     }
 }
